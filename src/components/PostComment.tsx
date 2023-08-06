@@ -54,7 +54,8 @@ export default function PostComment({ comment, votesAmount, currentVote, postId 
             router.refresh();
             setIsReplying(false);
         }
-    })
+    });
+
     return (
         <div className="flex flex-col" ref={commentRef}>
             <div className="flex items-center">
@@ -91,6 +92,7 @@ export default function PostComment({ comment, votesAmount, currentVote, postId 
                         <div className="mt-2">
                             <Textarea
                                 id="comment"
+                                className="border border-zinc-200 dark:border-zinc-800 placeholder:text-zinc-600 placeholder:dark:text-zinc-500 focus-visible:ring-teal-600 dark:focus-visible:ring-teal-500"
                                 value={input}
                                 onChange={(e) => setInput(e.target.value)}
                                 rows={1}

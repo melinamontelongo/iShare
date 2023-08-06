@@ -51,6 +51,7 @@ export default function CreateComment({postId, replyToId}:CreateCommentProps){
        <Label htmlFor="comment">Your comment</Label>
        <div className="mt-2">
         <Textarea 
+        className="border border-zinc-200 dark:border-zinc-800 placeholder:text-zinc-600 placeholder:dark:text-zinc-500 focus-visible:ring-teal-500 dark:focus-visible:ring-teal-600"
         id="comment" 
         value={input} 
         onChange={(e) => setInput(e.target.value)}
@@ -58,7 +59,7 @@ export default function CreateComment({postId, replyToId}:CreateCommentProps){
         placeholder="What are your thoughts?"
         />
         <div className="mt-2 flex justify-end">
-            <Button isLoading={isLoading} disabled={input.length === 0} onClick={() => comment({postId, text: input, replyToId})}>Post</Button>
+            <Button className="bg-zinc-900 dark:bg-zinc-50" isLoading={isLoading} disabled={input.length === 0} onClick={() => comment({postId, text: input, replyToId})}>Post</Button>
         </div>
        </div>
     </div>

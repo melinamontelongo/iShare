@@ -21,11 +21,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${inter.className} min-h-screen bg-slate-100 dark:bg-slate-900 antialiased`}>
+      <body className={`${inter.className} min-h-screen bg-zinc-100 dark:bg-zinc-900 antialiased`}>
         <Providers>
           <Navbar />
           {authModal}
-          <div className="container max-w-7xl mx-auto h-full">
+          <div className="container max-w-7xl mx-auto h-full mt-24">
             {children}
           </div>
           <Toaster />

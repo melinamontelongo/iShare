@@ -54,7 +54,7 @@ export default function Post({ communityName, post, commentAmount, votesAmount, 
 
                     {postRef.current?.clientHeight === 160 ? (
                         /* apply gradient if exceeding height */
-                        <div className="absolute bottom-0 left-0 h-24 w-full bg-gradient-to-t from-white to-transparent dark:from-slate-900"></div>
+                        <div className="absolute bottom-0 left-0 h-24 w-full bg-gradient-to-t from-zinc-50 to-transparent dark:from-zinc-900"></div>
                     ) : null
                     }
                 </div>

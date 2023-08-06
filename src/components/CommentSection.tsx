@@ -31,7 +31,7 @@ export default async function CommentSection({ postId }: CommentSectionProps) {
 
     return (
         <div className="flex flex-col gap-y-4 mt-4">
-            <hr className="w-full h-px my-6" />
+            <hr className="border border-zinc-200 dark:border-zinc-800 w-full h-px my-6" />
 
             <CreateComment postId={postId} />
 

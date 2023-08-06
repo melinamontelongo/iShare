@@ -13,21 +13,21 @@ interface SubscribeLeaveToggleProps {
     communityName: string,
     isSubscribed: boolean,
 }
-export default function SubscribeLeaveToggle({communityId, communityName, isSubscribed}:SubscribeLeaveToggleProps){
-    const {loginToast} = useCustomToast()
+export default function SubscribeLeaveToggle({ communityId, communityName, isSubscribed }: SubscribeLeaveToggleProps) {
+    const { loginToast } = useCustomToast()
     const router = useRouter()
 
-    const {mutate: subscribe, isLoading: isSubscribing} = useMutation({
-        mutationFn: async() => {
-            const payload:CommunitySubscriptionPayload = {
+    const { mutate: subscribe, isLoading: isSubscribing } = useMutation({
+        mutationFn: async () => {
+            const payload: CommunitySubscriptionPayload = {
                 communityId,
             }
-            const {data} = await axios.post("/api/community/subscribe", payload)
+            const { data } = await axios.post("/api/community/subscribe", payload)
             return data as string;
         },
         onError: (e) => {
-            if(e instanceof AxiosError){
-                if(e.response?.status === 401){
+            if (e instanceof AxiosError) {
+                if (e.response?.status === 401) {
                     return loginToast()
                 }
             }
@@ -46,20 +46,20 @@ export default function SubscribeLeaveToggle({communityId, communityName, isSubs
                 title: "Subscribed",
                 description: `You are now subscribed to ${communityName}`
             })
-        }   
+        }
     })
 
-    const {mutate: unsubscribe, isLoading: isUnsubscribing} = useMutation({
-        mutationFn: async() => {
-            const payload:CommunitySubscriptionPayload = {
+    const { mutate: unsubscribe, isLoading: isUnsubscribing } = useMutation({
+        mutationFn: async () => {
+            const payload: CommunitySubscriptionPayload = {
                 communityId,
             }
-            const {data} = await axios.post("/api/community/unsubscribe", payload)
+            const { data } = await axios.post("/api/community/unsubscribe", payload)
             return data as string;
         },
         onError: (e) => {
-            if(e instanceof AxiosError){
-                if(e.response?.status === 401){
+            if (e instanceof AxiosError) {
+                if (e.response?.status === 401) {
                     return loginToast()
                 }
             }
@@ -78,16 +78,16 @@ export default function SubscribeLeaveToggle({communityId, communityName, isSubs
                 title: "Unsubscribed",
                 description: `You are now unsubscribed to ${communityName}`
             })
-        }   
+        }
     })
-    
-    return isSubscribed ? 
-    (
-        <Button className="w-full mt-1 mb-4" onClick={() => unsubscribe()} isLoading={isUnsubscribing}>Leave community</Button>
-    ) 
-    :
-    (
-        <Button className="w-full mt-1 mb-4" onClick={() => subscribe()} isLoading={isSubscribing}>Join to post</Button>
-    )
+
+    return isSubscribed ?
+        (
+            <Button className="w-full mt-1 mb-4 bg-zinc-900 dark:bg-zinc-50 hover:dark:bg-zinc-200 hover:bg-zinc-800" onClick={() => unsubscribe()} isLoading={isUnsubscribing}>Leave community</Button>
+        )
+        :
+        (
+            <Button className="w-full mt-1 mb-4 bg-zinc-900 dark:bg-zinc-50 hover:dark:bg-zinc-200 hover:bg-zinc-800" onClick={() => subscribe()} isLoading={isSubscribing}>Join to post</Button>
+        )
 
 }

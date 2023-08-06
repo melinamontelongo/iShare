@@ -51,12 +51,11 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         {...props}>
         {isLoading ?
           <Ring
-            size={40}
+            size={20}
             lineWeight={5}
             speed={2}
             color="black"
-          /> : null}
-        {children}
+          /> : children}
       </button>
     )
   }
