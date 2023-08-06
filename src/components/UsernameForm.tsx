@@ -10,7 +10,7 @@ import { Button } from "./ui/Button";
 import { useMutation } from "@tanstack/react-query";
 import axios, { AxiosError } from "axios";
 import { toast } from "@/hooks/use-toast";
-import {useRouter} from "next/navigation"
+import { useRouter } from "next/navigation"
 interface UsernameFormProps {
     user: Pick<User, "id" | "username">
 }
@@ -24,17 +24,17 @@ export default function UsernameForm({ user }: UsernameFormProps) {
         }
     })
 
-    const {mutate: updateUsername, isLoading} = useMutation({
-        mutationFn: async({name}:UsernameRequest) => {
-            const payload: UsernameRequest = {name}
-            const {data} = await axios.patch(`/api/username`, payload)
+    const { mutate: updateUsername, isLoading } = useMutation({
+        mutationFn: async ({ name }: UsernameRequest) => {
+            const payload: UsernameRequest = { name }
+            const { data } = await axios.patch(`/api/username`, payload)
             return data;
         },
         onError: (err) => {
-            if(err instanceof AxiosError){
-                if(err.response?.status === 409){
+            if (err instanceof AxiosError) {
+                if (err.response?.status === 409) {
                     return toast({
-                        title:"Username already taken",
+                        title: "Username already taken",
                         description: "Please choose a different username.",
                         variant: "destructive"
                     })
@@ -46,7 +46,7 @@ export default function UsernameForm({ user }: UsernameFormProps) {
                 variant: "destructive"
             })
         },
-        onSuccess:() => {
+        onSuccess: () => {
             toast({
                 description: "Your username has been updated."
             })

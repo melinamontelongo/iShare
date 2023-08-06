@@ -50,6 +50,7 @@ model User {
   votes             Vote[]
 
   username String? @unique
+  password String?
 
   image       String?
   accounts    Account[]

@@ -34,7 +34,7 @@ export default async function Home() {
             </div>
           </div>
 
-          <Link href="/i/create"className={buttonVariants({className: "w-full mt-4 bg-zinc-900 dark:bg-zinc-50"})}>Create community</Link>
+          <Link href="/i/create"className={buttonVariants({className: "w-full mt-4 bg-zinc-900 hover:bg-zinc-800 dark:bg-zinc-50 dark:hover:bg-zinc-100"})}>Create community</Link>
         </div>
       </div>
     </>
