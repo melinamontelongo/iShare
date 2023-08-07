@@ -11,40 +11,52 @@ import { useTheme } from "next-themes";
 import Post from "./Post";
 
 interface PostFeedProps {
-    initialPosts: ExtendedPost[],
+    initialPosts: {
+        count: number,
+        posts: ExtendedPost[],
+    },
     communityName?: string,
 }
 
 export default function PostFeed({ initialPosts, communityName }: PostFeedProps) {
-    const { theme, setTheme, resolvedTheme } = useTheme();
+
+    const { resolvedTheme } = useTheme();
+
     const lastPostRef = useRef<HTMLElement>(null);
+
     const { ref, entry } = useIntersection({
         root: lastPostRef.current,
         threshold: 1,
     })
     const { data: session } = useSession();
 
-    const { data, fetchNextPage, isFetchingNextPage } = useInfiniteQuery(
-        ["infiniteQuery"],
-        async ({ pageParam = 1 }) => {
+    const { data, fetchNextPage, isFetchingNextPage, hasNextPage } = useInfiniteQuery({
+        queryKey: ["infiniteQuery"],
+        queryFn: async ({ pageParam = 1 }) => {
             const query = `/api/posts?limit=${INFINITE_SCROLLING_PAGINATION_RESULTS}&page=${pageParam}` +
                 (!!communityName ? `&communityName=${communityName}` : "");
             const { data } = await axios.get(query);
-            return data as ExtendedPost[]
-        }, {
-        getNextPageParam: (_, pages) => {
-            return pages.length + 1
+            return data;
+        },
+        getNextPageParam: (prev, pages) => {
+            if (prev.count / INFINITE_SCROLLING_PAGINATION_RESULTS >= pages.length) {
+                return pages.length + 1
+            } else {
+                //  No next page
+                return undefined;
+            }
         },
         initialData: { pages: [initialPosts], pageParams: [1] }
-    }
-    )
+    })
+
     useEffect(() => {
         if (entry?.isIntersecting) {
             fetchNextPage();
         }
-    }, [entry, fetchNextPage])
-    const posts = data?.pages.flatMap((page) => page) ?? initialPosts;
+    }, [entry, fetchNextPage]);
 
+    const posts: ExtendedPost[] = data?.pages.flatMap((page) => page.posts) ?? initialPosts.posts;
+ 
     return <ul className="flex flex-col col-span-2 space-y-6">
         {posts.map((post, index) => {
             const votesAmount = post.votes.reduce((acc, vote) => {

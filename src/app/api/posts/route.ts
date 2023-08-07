@@ -1,7 +1,8 @@
 import { getAuthSession } from "@/lib/auth";
 import { prisma } from "@/lib/db";
+import { ExtendedPost } from "@/types/extended-post";
 import { Session } from "next-auth";
-import {z} from "zod";
+import { z } from "zod";
 
 export async function GET(req: Request) {
     const url = new URL(req.url);
@@ -18,10 +19,10 @@ export async function GET(req: Request) {
                 community: true,
             }
         })
-        subscriptionsIds = subscriptions.map(({community}) => community.id);
+        subscriptionsIds = subscriptions.map(({ community }) => community.id);
     }
     try {
-        const {communityName, limit, page} = z.object({
+        const { communityName, limit, page } = z.object({
             limit: z.string(),
             page: z.string(),
             communityName: z.string().nullish().optional()
@@ -29,41 +30,71 @@ export async function GET(req: Request) {
             communityName: url.searchParams.get("communityName"),
             limit: url.searchParams.get("limit"),
             page: url.searchParams.get("page")
-        })
-        let whereClause = {};
+        });
+
+        let whereClause: object | null = null;
+        let posts: ExtendedPost[] = [];
+        let postsCount: number = 0;
+
         //  If req comes from inside a community
-        if(communityName){
+        if (communityName) {
             whereClause = {
                 community: {
                     name: communityName,
                 },
             }
-        //  If user is logged in: match communities the user is following
-        } else if(session){
-            whereClause = {
-                community: {
-                    id: {
-                        in: subscriptionsIds,
+            //  If user is logged in: match communities the user is following
+        } else if (session) {
+            if (subscriptionsIds.length > 0) {
+                whereClause = {
+                    community: {
+                        id: {
+                            in: subscriptionsIds,
+                        }
                     }
                 }
+            } else {
+                whereClause = null
             }
-        }
-        const posts = await prisma.post.findMany({
-            take: parseInt(limit),
-            //  skip posts already shown
-            skip: (parseInt(page) - 1) * parseInt(limit) ,
-            orderBy: {
-                createdAt: "desc"
-            },
-            include: {
-                community: true,
-                votes: true,
-                author: true,
-                comments: true,
-            },
-            where: whereClause,
-        })
-        return new Response(JSON.stringify(posts));
+        };
+
+        if (whereClause) {
+            postsCount = await prisma.post.count({
+                where: whereClause
+            });
+            posts = await prisma.post.findMany({
+                take: parseInt(limit),
+                //  skip posts already shown
+                skip: (parseInt(page) - 1) * parseInt(limit),
+                orderBy: {
+                    createdAt: "desc"
+                },
+                include: {
+                    community: true,
+                    votes: true,
+                    author: true,
+                    comments: true,
+                },
+                where: whereClause,
+            })
+        } else {
+            postsCount = await prisma.post.count();
+            posts = await prisma.post.findMany({
+                take: parseInt(limit),
+                //  skip posts already shown
+                skip: (parseInt(page) - 1) * parseInt(limit),
+                orderBy: {
+                    createdAt: "desc"
+                },
+                include: {
+                    community: true,
+                    votes: true,
+                    author: true,
+                    comments: true,
+                }
+            })
+        };
+        return new Response(JSON.stringify({ count: postsCount, posts }));
     } catch (e) {
         if (e instanceof z.ZodError) {
             //  Wrong data was sent

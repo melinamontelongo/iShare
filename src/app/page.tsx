@@ -1,5 +1,4 @@
-import CustomFeed from "@/components/CustomFeed";
-import GeneralFeed from "@/components/GeneralFeed";
+import Feed from "@/components/Feed";
 import { buttonVariants } from "@/components/ui/Button"
 import { getAuthSession } from "@/lib/auth"
 import Link from "next/link"
@@ -14,14 +13,14 @@ export default async function Home() {
     <>
       <h1 className="font-bold text-3xl md:text-4xl">Your feed</h1>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-y-4 md:gap-x-4 py-6">
-        {/* feed: custom or general */}
-        {session ? <CustomFeed /> : <GeneralFeed />}
+        {/* feed */}
+        <Feed />
 
         {/* community info */}
         <div className="overflow-hidden h-fit rounded-lg border border-zinc-200 dark:border-zinc-800 order-first md:order-last">
           <div className="bg-teal-100 dark:bg-teal-800 px-6 py-4">
             <p className="font-semibold py-3 flex items-center gap-1.5">
-              <AiFillHome className="w-4 h-4"/>
+              <AiFillHome className="w-4 h-4" />
               Home
             </p>
           </div>
@@ -34,7 +33,7 @@ export default async function Home() {
             </div>
           </div>
 
-          <Link href="/i/create"className={buttonVariants({className: "w-full mt-4 bg-zinc-900 hover:bg-zinc-800 dark:bg-zinc-50 dark:hover:bg-zinc-100"})}>Create community</Link>
+          <Link href="/i/create" className={buttonVariants({ className: "w-full mt-4 bg-zinc-900 hover:bg-zinc-800 dark:bg-zinc-50 dark:hover:bg-zinc-100" })}>Create community</Link>
         </div>
       </div>
     </>
