@@ -1,5 +1,4 @@
 import * as React from "react"
-import { Slot } from "@radix-ui/react-slot"
 import { cva, type VariantProps } from "class-variance-authority"
 import { Ring } from '@uiball/loaders'
 
@@ -38,11 +37,13 @@ export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
   VariantProps<typeof buttonVariants> {
   asChild?: boolean,
-  isLoading?: boolean
+  isLoading?: boolean,
+  loadingColor?: string,
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, children, variant, isLoading, size, asChild = false, ...props }, ref) => {
+  ({ className, children, variant, isLoading, loadingColor, size, asChild = false, ...props }, ref) => {
+
     return (
       <button
         className={cn(buttonVariants({ variant, size, className }))}
@@ -54,7 +55,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
             size={20}
             lineWeight={5}
             speed={2}
-            color="black"
+            color={loadingColor ?? "#18181b"}
           /> : children}
       </button>
     )

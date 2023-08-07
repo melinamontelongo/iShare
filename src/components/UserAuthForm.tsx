@@ -3,6 +3,7 @@ import { useState } from "react"
 import { signIn } from "next-auth/react";
 import { FcGoogle } from "react-icons/fc";
 import { useToast } from "@/hooks/use-toast";
+import { Ring } from "@uiball/loaders";
 
 export default function UserAuthForm() {
     const [isLoading, setIsLoading] = useState<boolean>(false)
@@ -25,8 +26,15 @@ export default function UserAuthForm() {
     return (
         <div className="flex justify-center">
             <button onClick={loginWithGoogle} className="w-full flex mx-auto bg-zinc-900 hover:bg-zinc-800 dark:bg-zinc-100 dark:hover:bg-zinc-200 py-2 rounded-md justify-center items-center gap-4">
-                {isLoading ? null : <FcGoogle />}
-                <span className="text-zinc-100 dark:text-zinc-900">Google</span>
+                {isLoading ? <Ring
+                    size={20}
+                    lineWeight={5}
+                    speed={2}
+                    color="#18181b"
+                />
+                    :
+                    <><FcGoogle /> <span className="text-zinc-100 dark:text-zinc-900">Google</span></>
+                }
             </button>
         </div>
     )

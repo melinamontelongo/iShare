@@ -50,7 +50,7 @@ export default function SignInCredentials() {
                 <Input className="bg-zinc-100 dark:bg-zinc-900 placeholder:text-zinc-600 placeholder:dark:text-zinc-500 border border-zinc-200 dark:border-zinc-800 focus-visible:ring-teal-600 dark:focus-visible:ring-teal-500"
                     type="password" {...register("password")} />
             </div>
-            <Button isLoading={isLoading} type="submit" className="w-full bg-teal-500 dark:bg-teal-600 hover:bg-teal-600 dark:hover:bg-teal-700 ">Sign In</Button>
+            <Button isLoading={isLoading} loadingColor={"#18181b"} type="submit" className="w-full bg-teal-500 dark:bg-teal-600 hover:bg-teal-600 dark:hover:bg-teal-700 ">Sign In</Button>
         </form>
     )
 }

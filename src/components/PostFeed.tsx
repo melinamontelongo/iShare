@@ -7,6 +7,7 @@ import axios from "axios";
 import { ExtendedPost } from "@/types/extended-post";
 import { useSession } from "next-auth/react";
 import { Ring } from '@uiball/loaders'
+import { useTheme } from "next-themes";
 import Post from "./Post";
 
 interface PostFeedProps {
@@ -15,7 +16,8 @@ interface PostFeedProps {
 }
 
 export default function PostFeed({ initialPosts, communityName }: PostFeedProps) {
-    const lastPostRef = useRef<HTMLElement>(null)
+    const { theme, setTheme, resolvedTheme } = useTheme();
+    const lastPostRef = useRef<HTMLElement>(null);
     const { ref, entry } = useIntersection({
         root: lastPostRef.current,
         threshold: 1,
@@ -78,9 +80,10 @@ export default function PostFeed({ initialPosts, communityName }: PostFeedProps)
         {isFetchingNextPage &&
             <div className="flex justify-center">
                 <Ring
-                    size={40}
+                    size={30}
                     lineWeight={5}
                     speed={2}
+                    color={`${resolvedTheme === "dark" ? "#f4f4f5" : "#18181b"}`}
                 />
             </div>
         }
