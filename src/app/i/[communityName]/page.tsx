@@ -14,6 +14,13 @@ interface PageProps {
 export default async function communityPage({ params }: PageProps) {
     const { communityName } = params;
     const session = await getAuthSession();
+    const communityPostsCount = await prisma.post.count({
+        where: {
+            community: {
+                name: communityName,
+            }
+        }
+    });
     const community = await prisma.community.findFirst({
         where: { name: communityName },
         include: {
@@ -36,6 +43,6 @@ export default async function communityPage({ params }: PageProps) {
     return <>
         <h1 className="font-bold text-3xl md:text-4xl h-14">i/{community.name}</h1>
         <MiniCreatePost session={session} />
-        <PostFeed initialPosts={community.posts} communityName={community.name} />
+        <PostFeed initialPosts={{count: communityPostsCount, posts: community.posts}} communityName={community.name} />
     </>
 }

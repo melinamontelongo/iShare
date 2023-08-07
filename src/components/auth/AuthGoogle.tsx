@@ -4,15 +4,20 @@ import { signIn } from "next-auth/react";
 import { FcGoogle } from "react-icons/fc";
 import { useToast } from "@/hooks/use-toast";
 import { Ring } from "@uiball/loaders";
+import { useRouter } from "next/navigation";
 
 export default function AuthGoogle() {
-    const [isLoading, setIsLoading] = useState<boolean>(false)
+    const [isLoading, setIsLoading] = useState<boolean>(false);
+    const router = useRouter();
     const { toast } = useToast();
 
     const loginWithGoogle = async () => {
         setIsLoading(true);
         try {
             await signIn("google");
+            toast({ title: "Successfully logged in!" });
+            router.refresh();
+            router.push("/");
         } catch (error) {
             toast({
                 title: "There was a problem.",
