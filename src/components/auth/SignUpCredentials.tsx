@@ -7,9 +7,9 @@ import { useMutation } from "@tanstack/react-query";
 import axios, { AxiosError } from "axios";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
-import { Label } from "./ui/Label";
-import { Input } from "./ui/Input";
-import { Button } from "./ui/Button";
+import { Label } from "../ui/Label";
+import { Input } from "../ui/Input";
+import { Button } from "../ui/Button";
 
 export default function SignUpCredentials() {
     const router = useRouter();

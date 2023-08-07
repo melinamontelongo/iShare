@@ -1,5 +1,5 @@
 import Link from "next/link";
-import UserAuthForm from "./UserAuthForm";
+import AuthGoogle from "./AuthGoogle";
 import SignInCredentials from "./SignInCredentials";
 
 export default function SignIn() {
@@ -11,7 +11,7 @@ export default function SignIn() {
             </div>
             <SignInCredentials />
             <p className="text-xs text-center">Or continue with</p>
-            <UserAuthForm />
+            <AuthGoogle />
             <p className="px-8 text-center text-sm text-zinc-700">New to iShare?{' '}
                 <Link href="/sign-up" className="hover:text-zinc-800 text-sm underline underline-offset-4">Sign Up</Link>
             </p>

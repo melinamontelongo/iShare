@@ -1,5 +1,5 @@
 import Link from "next/link";
-import SignIn from "@/components/SignIn";
+import SignIn from "@/components/auth/SignIn";
 import { ChevronLeft } from "lucide-react";
 
 export default function SignInPage() {

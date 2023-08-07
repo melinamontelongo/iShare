@@ -5,10 +5,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { Label } from "./ui/Label";
-import { Input } from "./ui/Input";
+import { Label } from "../ui/Label";
+import { Input } from "../ui/Input";
 import { FieldValues, useForm } from "react-hook-form";
-import { Button } from "./ui/Button";
+import { Button } from "../ui/Button";
 
 export default function SignInCredentials() {
     const router = useRouter()

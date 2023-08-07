@@ -1,5 +1,5 @@
 import Link from "next/link";
-import SignUp from "@/components/SignUp";
+import SignUp from "@/components/auth/SignUp";
 import { ChevronLeft } from "lucide-react";
 
 export default function SignUpPage() {

@@ -5,7 +5,7 @@ import { FcGoogle } from "react-icons/fc";
 import { useToast } from "@/hooks/use-toast";
 import { Ring } from "@uiball/loaders";
 
-export default function UserAuthForm() {
+export default function AuthGoogle() {
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const { toast } = useToast();
 
