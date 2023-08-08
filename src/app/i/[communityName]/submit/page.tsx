@@ -28,7 +28,7 @@ export default async function submit({params}:PageProps){
         <Editor communityId={community.id} />
 
         <div className="w-full flex justify-end">
-            <Button type="submit" className="w-4" form="community-post-form">Post</Button>
+            <Button type="submit" className="bg-zinc-900 dark:bg-zinc-50 hover:dark:bg-zinc-300 hover:bg-zinc-800" form="community-post-form">Post</Button>
         </div>
     </div>
 }

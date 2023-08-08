@@ -1,0 +1,32 @@
+/* light */
+.ce-toolbar__plus, .ce-toolbar__settings-btn{
+    color: #18181b;
+}
+.ce-toolbar__plus:hover, .ce-toolbar__settings-btn:hover{
+    background-color: #18181b;
+    color: #f4f4f5;
+}
+/* dark */
+.dark .ce-toolbar__plus, .dark .ce-toolbar__settings-btn{
+    color: #f4f4f5;
+}
+
+.dark .ce-toolbar__plus:hover, .dark .ce-toolbar__settings-btn:hover{
+    background-color: #f4f4f5;
+    color: #18181b;
+}
+.ce-conversion-tool--focused{
+    background-color: #d4d4d8!important;
+}
+.dark .cdx-search-field__input, 
+.dark .ce-inline-tool, 
+.dark .ce-conversion-tool,
+.dark .ce-conversion-toolbar__label, 
+.dark .ce-conversion-tool__icon,
+.dark .ce-inline-toolbar__dropdown{
+    color: #18181b;
+}
+.dark ::selection, .dark .ce-block--selected {
+    background-color: #f4f4f5;
+    color: #18181b;
+}

@@ -10,6 +10,7 @@ import { toast } from "@/hooks/use-toast";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { usePathname, useRouter } from "next/navigation";
+import "../styles/editor.css";
 
 interface EditorProps {
     communityId: string,
@@ -82,7 +83,7 @@ export default function Editor({ communityId }: EditorProps) {
                     },
                     list: List,
                     code: Code,
-                    inlineCOde: InlineCode,
+                    inlineCode: InlineCode,
                     table: Table,
                     embed: Embed,
                 },
@@ -167,24 +168,26 @@ export default function Editor({ communityId }: EditorProps) {
         return null
     };
 
-    return <div className="w-full p-4 rounded-lg border">
-        <form
-            id="community-post-form"
-            className="w-fit"
-            onSubmit={handleSubmit(onSubmit)}>
-            <div className="prose prose-stone dark:prose-invert">
-                <TextareaAutosize
-                    ref={(e) => {
-                        titleRef(e)
-                        //@ts-ignore
-                        _titleRef.current = e
-                    }}
-                    {...registerRest}
-                    placeholder="Title"
-                    className="w-full resize-none appearance-none overflow-hidden bg-transparent text-5xl font-bold focus:outline-none" />
-                { }
-                <div id="editor" className="min-h-[500px]" />
-            </div>
-        </form>
-    </div>
+    return (
+        <div className="w-full p-4 rounded-lg border border-zinc-200 dark:border-zinc-800 ">
+            <form
+                id="community-post-form"
+                className="w-fit"
+                onSubmit={handleSubmit(onSubmit)}>
+                <div className="prose prose-stone dark:prose-invert">
+                    <TextareaAutosize
+                        ref={(e) => {
+                            titleRef(e)
+                            //@ts-ignore
+                            _titleRef.current = e
+                        }}
+                        {...registerRest}
+                        placeholder="Title"
+                        className="w-full resize-none appearance-none overflow-hidden bg-transparent text-5xl font-bold focus:outline-none" />
+                    { }
+                    <div id="editor" className="min-h-[500px]" />
+                </div>
+            </form>
+        </div>
+    )
 }
