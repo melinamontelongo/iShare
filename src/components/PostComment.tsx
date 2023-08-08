@@ -81,7 +81,7 @@ export default function PostComment({ comment, votesAmount, currentVote, postId 
                 <Button onClick={() => {
                     if (!session) return router.push("/sign-in");
                     setIsReplying(true);
-                }} variant="ghost" size="sm">
+                }} variant="ghost" size="sm" className="hover:bg-zinc-200 dark:hover:bg-zinc-800">
                     <MessageSquare className="h-4 w-4 mr-1.5" />
                     Reply
                 </Button>
@@ -92,15 +92,15 @@ export default function PostComment({ comment, votesAmount, currentVote, postId 
                         <div className="mt-2">
                             <Textarea
                                 id="comment"
-                                className="border border-zinc-200 dark:border-zinc-800 placeholder:text-zinc-600 placeholder:dark:text-zinc-500 focus-visible:ring-teal-600 dark:focus-visible:ring-teal-500"
+                                className="border border-zinc-200 dark:border-zinc-800 placeholder:text-zinc-600 placeholder:dark:text-zinc-500 focus-visible:ring-teal-500 dark:focus-visible:ring-teal-600"
                                 value={input}
                                 onChange={(e) => setInput(e.target.value)}
                                 rows={1}
                                 placeholder="What are your thoughts?"
                             />
                             <div className="mt-2 flex justify-end gap-2">
-                                <Button tabIndex={-1} variant="ghost" onClick={() => setIsReplying(false)}>Cancel</Button>
-                                <Button isLoading={isLoading} disabled={input.length === 0} 
+                                <Button tabIndex={-1} className="text-zinc-900 dark:text-zinc-50 bg-zinc-50 dark:bg-zinc-950 hover:bg-zinc-200 dark:hover:bg-zinc-800" onClick={() => setIsReplying(false)}>Cancel</Button>
+                                <Button isLoading={isLoading} disabled={input.length === 0}  className="hover:dark:bg-zinc-200 hover:bg-zinc-800"
                                 onClick={() => {
                                     if(!input) return;
                                     submitComment({

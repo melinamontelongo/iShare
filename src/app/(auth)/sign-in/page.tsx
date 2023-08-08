@@ -10,7 +10,7 @@ export default async function SignInPage() {
     return (
         <div className="absolute inset-0">
             <div className="h-full max-w-2xl mx-auto flex flex-col items-center justify-center">
-                <Link href="/" className="self-start flex gap-2"><ChevronLeft /> Go back</Link>
+                <Link href="/" className="self-start flex gap-2"><ChevronLeft className='h-4 w-4 mr-1' /> Go back</Link>
                 <SignIn />
             </div>
         </div>

@@ -70,7 +70,7 @@ export default function CommentVotes({ commentId, initialVotesAmount, initialVot
     return (
         <div className="flex gap-1">
             <Button onClick={() => vote("UP")}
-                size="sm" variant="ghost" aria-label="upvote">
+                size="sm" variant="ghost" aria-label="upvote" className="hover:bg-zinc-200 dark:hover:bg-zinc-800">
                 <ArrowBigUp className={cn("h-5 w-5 text-zinc-700", {
                     "text-emerald-500 fill-emerald-500": currentVote?.type === "UP"
                 })} />
@@ -78,7 +78,7 @@ export default function CommentVotes({ commentId, initialVotesAmount, initialVot
 
             <p className="text-center py-2 font-medium text-sm">{votesAmount}</p>
 
-            <Button onClick={() => vote("DOWN")} size="sm" variant="ghost" aria-label="downvote">
+            <Button onClick={() => vote("DOWN")} size="sm" variant="ghost" aria-label="downvote" className="hover:bg-zinc-200 dark:hover:bg-zinc-800">
                 <ArrowBigDown className={cn("h-5 w-5 text-zinc-700", {
                     "text-red-500 fill-red-500": currentVote?.type === "DOWN"
                 })} />

@@ -60,7 +60,7 @@ export default function Create() {
                 <div className="flex justify-between items-center">
                     <h1 className="text-xl font-semibold">Create a community</h1>
                 </div>
-                <hr className="bg-zinc-500 h-px" />
+                <hr className="border border-zinc-200 dark:border-zinc-800 h-px" />
 
                 <div>
                     <p className="text-lg font-medium">Name</p>
@@ -69,12 +69,12 @@ export default function Create() {
                         <p className="absolute text-sm left-0 w-8 inset-y-0 grid place-items-center text-zinc-400">
                             i/
                         </p>
-                        <Input value={input} onChange={(e) => setInput(e.target.value)} className="pl-6" />
+                        <Input value={input} onChange={(e) => setInput(e.target.value)} className="pl-6 bg-zinc-100 dark:bg-zinc-900 pl-6 border border-zinc-200 dark:border-zinc-800 placeholder:text-zinc-600 placeholder:dark:text-zinc-500 focus-visible:ring-teal-500 dark:focus-visible:ring-teal-600" />
                     </div>
                 </div>
                 <div className="flex justify-end gap-4">
-                    <Button variant="ghost" onClick={() => router.back()}>Cancel</Button>
-                    <Button isLoading={isLoading} disabled={input.length === 0} onClick={() => createCommunity()}>Create community</Button>
+                    <Button variant="ghost" onClick={() => router.back()} className="text-zinc-900 dark:text-zinc-50 bg-zinc-50 dark:bg-zinc-950 hover:bg-zinc-200 dark:hover:bg-zinc-800">Cancel</Button>
+                    <Button isLoading={isLoading} disabled={input.length === 0} onClick={() => createCommunity()} className="hover:dark:bg-zinc-200 hover:bg-zinc-800">Create community</Button>
                 </div>
             </div>
         </div>

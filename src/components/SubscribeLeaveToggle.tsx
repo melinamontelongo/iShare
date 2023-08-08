@@ -83,11 +83,11 @@ export default function SubscribeLeaveToggle({ communityId, communityName, isSub
 
     return isSubscribed ?
         (
-            <Button className="w-full mt-1 mb-4 bg-zinc-900 dark:bg-zinc-50 hover:dark:bg-zinc-200 hover:bg-zinc-800" onClick={() => unsubscribe()} isLoading={isUnsubscribing}>Leave community</Button>
+            <Button className="w-full mt-1 mb-4 bg-zinc-900 dark:bg-zinc-50 hover:dark:bg-zinc-300 hover:bg-zinc-800" onClick={() => unsubscribe()} isLoading={isUnsubscribing}>Leave community</Button>
         )
         :
         (
-            <Button className="w-full mt-1 mb-4 bg-zinc-900 dark:bg-zinc-50 hover:dark:bg-zinc-200 hover:bg-zinc-800" onClick={() => subscribe()} isLoading={isSubscribing}>Join to post</Button>
+            <Button className="w-full mt-1 mb-4 bg-zinc-900 dark:bg-zinc-50 hover:dark:bg-zinc-300 hover:bg-zinc-800" onClick={() => subscribe()} isLoading={isSubscribing}>Join to post</Button>
         )
 
 }

@@ -59,7 +59,7 @@ export default function CreateComment({postId, replyToId}:CreateCommentProps){
         placeholder="What are your thoughts?"
         />
         <div className="mt-2 flex justify-end">
-            <Button className="bg-zinc-900 dark:bg-zinc-50" isLoading={isLoading} disabled={input.length === 0} onClick={() => comment({postId, text: input, replyToId})}>Post</Button>
+            <Button className="bg-zinc-900 dark:bg-zinc-50 hover:dark:bg-zinc-300 hover:bg-zinc-800" isLoading={isLoading} disabled={input.length === 0} onClick={() => comment({postId, text: input, replyToId})}>Post</Button>
         </div>
        </div>
     </div>

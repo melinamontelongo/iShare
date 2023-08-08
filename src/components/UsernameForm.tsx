@@ -57,7 +57,7 @@ export default function UsernameForm({ user }: UsernameFormProps) {
 
     return (
         <form onSubmit={handleSubmit((e) => updateUsername(e))}>
-            <Card>
+            <Card className="bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800">
                 <CardHeader>
                     <CardTitle>Your username</CardTitle>
                     <CardDescription>
@@ -70,14 +70,14 @@ export default function UsernameForm({ user }: UsernameFormProps) {
                             <span className="text-sm">u/</span>
                         </div>
                         <Label className="sr-only" htmlFor="name">Name</Label>
-                        <Input id="name" className="w-[400px] pl-6" size={32} {...register("name")} />
+                        <Input id="name" className="w-[400px] bg-zinc-100 dark:bg-zinc-900 pl-6 border border-zinc-200 dark:border-zinc-800 placeholder:text-zinc-600 placeholder:dark:text-zinc-500 focus-visible:ring-teal-500 dark:focus-visible:ring-teal-600" size={32} {...register("name")} />
                         {errors?.name && (
                             <p className="px-1 text-xs text-red-600">{errors.name.message}</p>
                         )}
                     </div>
                 </CardContent>
                 <CardFooter>
-                    <Button isLoading={isLoading}>Change name</Button>
+                    <Button isLoading={isLoading} className="hover:dark:bg-zinc-200 hover:bg-zinc-800">Change name</Button>
                 </CardFooter>
             </Card>
         </form>

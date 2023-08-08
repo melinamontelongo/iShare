@@ -82,8 +82,8 @@ export default async function communityLayout({children, params: {communityName}
                                 <SubscribeLeaveToggle communityId={community.id} communityName={community.name} isSubscribed={isSubscribed}/>
                             ): null}
                             {isSubscribed && <Link className={buttonVariants({
-                                variant: "outline",
-                                className: "w-full mb-6"
+                                variant: "default",
+                                className: "w-full mt-1 mb-4 bg-teal-500 dark:bg-teal-600 hover:dark:bg-teal-700 hover:bg-teal-600 outline-none border-none"
                             })}
                             href={`/i/${communityName}/submit`}>Create Post</Link>}
                         </dl>

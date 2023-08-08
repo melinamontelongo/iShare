@@ -19,32 +19,32 @@ export default function UserAccountNav({ user }: UserAccountNavProps) {
                     className='h-8 w-8'
                 />
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="" align="end">
+            <DropdownMenuContent className="bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800" align="end">
                 <div className="flex items-center justify-start gap-2 p-2">
                     <div className="flex flex-col space-y-1 leading-none">
                         {user.name && <p className="font-medium">{user.name}</p>}
                         {user.email && <p className="w-[200px] truncate text-sm text-zinc-500 dark:text-zinc-600">{user.email}</p>}
                     </div>
                 </div>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem asChild>
+                <DropdownMenuSeparator className="border border-zinc-200 dark:border-zinc-800" />
+                <DropdownMenuItem className="hover:bg-zinc-100 dark:hover:bg-zinc-900" asChild>
                     <Link href="/">Feed</Link>
                 </DropdownMenuItem>
-                <DropdownMenuItem asChild>
-                    <Link href="/r/create">Create community</Link>
+                <DropdownMenuItem className="hover:bg-zinc-100 dark:hover:bg-zinc-900"  asChild>
+                    <Link href="/i/create">Create community</Link>
                 </DropdownMenuItem>
-                <DropdownMenuItem asChild>
+                <DropdownMenuItem className="hover:bg-zinc-100 dark:hover:bg-zinc-900"  asChild>
                     <Link href="/settings">Settings</Link>
                 </DropdownMenuItem>
 
-                <DropdownMenuSeparator />
+                <DropdownMenuSeparator className="border border-zinc-200 dark:border-zinc-800" />
 
                 <DropdownMenuItem onSelect={(e) => {
                     e.preventDefault()
                     signOut({
                         callbackUrl: `${window.location.origin}/sign-in`
                     })
-                }} className="cursor-pointer">
+                }} className="cursor-pointer hover:bg-zinc-100 dark:hover:bg-zinc-900">
                     Sign Out
                 </DropdownMenuItem>
             </DropdownMenuContent>
