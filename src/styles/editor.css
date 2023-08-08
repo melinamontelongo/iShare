@@ -2,6 +2,12 @@
 .ce-toolbar__plus, .ce-toolbar__settings-btn{
     color: #18181b;
 }
+@media (max-width: 780px){
+    .ce-toolbar__plus, .ce-toolbar__settings-btn{
+        color: #18181b!important;
+        background-color: #f4f4f5;
+    } 
+}
 .ce-toolbar__plus:hover, .ce-toolbar__settings-btn:hover{
     background-color: #18181b;
     color: #f4f4f5;

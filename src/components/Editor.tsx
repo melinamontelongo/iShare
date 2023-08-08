@@ -169,12 +169,12 @@ export default function Editor({ communityId }: EditorProps) {
     };
 
     return (
-        <div className="w-full p-4 rounded-lg border border-zinc-200 dark:border-zinc-800 ">
+        <div className="sm:w-full w-screen p-4 rounded-lg border border-zinc-200 dark:border-zinc-800 ">
             <form
                 id="community-post-form"
                 className="w-fit"
                 onSubmit={handleSubmit(onSubmit)}>
-                <div className="prose prose-stone dark:prose-invert">
+                <div className="prose prose-zinc dark:prose-invert">
                     <TextareaAutosize
                         ref={(e) => {
                             titleRef(e)
