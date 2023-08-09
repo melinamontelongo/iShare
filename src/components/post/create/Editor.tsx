@@ -10,7 +10,7 @@ import { toast } from "@/hooks/use-toast";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { usePathname, useRouter } from "next/navigation";
-import "../styles/editor.css";
+import "../../../styles/editor.css";
 
 interface EditorProps {
     communityId: string,
