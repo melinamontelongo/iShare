@@ -22,7 +22,7 @@ export default async function Navbar() {
                     <div className="block rounded-md md:px-5 md:py-2.5 px-3 py-2 text-sm font-medium transition">
                         <ThemeChanger />
                     </div>
-                    <div className="sm:flex sm:gap-2">
+                    <div className="sm:flex">
                         {session ? (
                             <UserAccountNav user={session.user} />
                         )

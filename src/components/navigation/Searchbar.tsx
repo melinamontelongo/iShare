@@ -34,7 +34,7 @@ export default function Searchbar({ }) {
     }, 300)
     const debounceRequest = useCallback(() => {
         request();
-    }, []);
+    }, [request]);
 
     useOnClickOutside(commandRef, () => {
         setInput("");
