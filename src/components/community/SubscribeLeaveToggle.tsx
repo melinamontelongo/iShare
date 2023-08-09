@@ -1,6 +1,6 @@
 "use client"
 import { useMutation } from "@tanstack/react-query";
-import { Button } from "./ui/Button";
+import { Button } from "../ui/Button";
 import { CommunitySubscriptionPayload } from "@/lib/validators/community";
 import axios, { AxiosError } from "axios";
 import useCustomToast from "@/hooks/use-custom-toast";

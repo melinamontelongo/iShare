@@ -1,5 +1,5 @@
-import MiniCreatePost from "@/components/MiniCreatePost";
-import PostFeed from "@/components/PostFeed";
+import MiniCreatePost from "@/components/post/create/MiniCreatePost";
+import PostFeed from "@/components/post/display/PostFeed";
 import { INFINITE_SCROLLING_PAGINATION_RESULTS } from "@/config";
 import { getAuthSession } from "@/lib/auth";
 import { prisma } from "@/lib/db";

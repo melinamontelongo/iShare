@@ -1,5 +1,5 @@
 import Link from "next/link";
-import ThemeChanger from "./ThemeChanger";
+import ThemeChanger from "../ui/ThemeChanger";
 import { getAuthSession } from "@/lib/auth";
 import UserAccountNav from "./UserAccountNav";
 import Searchbar from "./Searchbar";

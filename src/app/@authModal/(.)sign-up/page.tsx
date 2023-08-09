@@ -1,4 +1,4 @@
-import CloseModal from "@/components/CloseModal";
+import CloseModal from "@/components/ui/CloseModal";
 import SignUp from "@/components/auth/SignUp";
 
 export default function SignUpModal() {

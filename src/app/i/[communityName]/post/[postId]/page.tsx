@@ -1,6 +1,6 @@
-import CommentSection from "@/components/CommentSection";
-import EditorOutput from "@/components/EditorOutput";
-import PostVoteServer from "@/components/post-vote/PostVoteServer";
+import CommentSection from "@/components/post/comments/CommentSection";
+import EditorOutput from "@/components/post/create/EditorOutput";
+import PostVoteServer from "@/components/post/post-vote/PostVoteServer";
 import { buttonVariants } from "@/components/ui/Button";
 import { prisma } from "@/lib/db";
 import { formatTimeToNow } from "@/lib/utils";

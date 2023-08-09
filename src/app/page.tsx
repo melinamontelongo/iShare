@@ -1,4 +1,4 @@
-import Feed from "@/components/Feed";
+import Feed from "@/components/post/display/Feed";
 import { buttonVariants } from "@/components/ui/Button"
 import { getAuthSession } from "@/lib/auth"
 import Link from "next/link"

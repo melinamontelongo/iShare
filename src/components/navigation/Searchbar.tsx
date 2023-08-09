@@ -1,6 +1,6 @@
 "use client"
 import { useQuery } from "@tanstack/react-query";
-import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "./ui/Command";
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "../ui/Command";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Community, Prisma } from "@prisma/client";
 import { useRouter } from "next/navigation";

@@ -1,10 +1,10 @@
 "use client"
 import { User } from "next-auth"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator } from "./ui/DropdownMenu"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator } from "../ui/DropdownMenu"
 import { DropdownMenuTrigger } from "@radix-ui/react-dropdown-menu"
 import Link from "next/link"
 import { signOut } from "next-auth/react"
-import { UserAvatar } from "./UserAvatar"
+import { UserAvatar } from "../ui/UserAvatar"
 
 interface UserAccountNavProps {
     user: Pick<User, "name" | "image" | "email">

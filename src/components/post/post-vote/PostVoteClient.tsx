@@ -2,37 +2,38 @@
 
 import useCustomToast from "@/hooks/use-custom-toast"
 import { usePrevious } from "@mantine/hooks";
-import { CommentVote, VoteType } from "@prisma/client"
-import {  useState } from "react";
-import { Button } from "./ui/Button";
+import { VoteType } from "@prisma/client"
+import { useEffect, useState } from "react";
+import { Button } from "../../ui/Button";
 import { ArrowBigDown, ArrowBigUp } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useMutation } from "@tanstack/react-query";
-import { CommentVoteRequest } from "@/lib/validators/vote";
+import { PostVoteRequest } from "@/lib/validators/vote";
 import axios, { AxiosError } from "axios";
 import { toast } from "@/hooks/use-toast";
 
-type PartialVote = Pick<CommentVote, "type">
-
-interface CommentVotesProps {
-    commentId: string,
+interface PostVoteClientProps {
+    postId: string,
     initialVotesAmount: number,
-    initialVote?: PartialVote
+    initialVote?: VoteType | null
 }
-
-export default function CommentVotes({ commentId, initialVotesAmount, initialVote }: CommentVotesProps) {
+export default function PostVoteClient({ postId, initialVotesAmount, initialVote }: PostVoteClientProps) {
     const { loginToast } = useCustomToast();
     const [votesAmount, setVotesAmount] = useState<number>(initialVotesAmount);
-    const [currentVote, setCurrentVote] = useState<PartialVote | undefined>(initialVote);
+    const [currentVote, setCurrentVote] = useState(initialVote);
     const previousVote = usePrevious(currentVote);
 
+    useEffect(() => {
+        setCurrentVote(initialVote)
+    }, [initialVote])
+
     const { mutate: vote } = useMutation({
-        mutationFn: async (type:VoteType) => {
-            const payload: CommentVoteRequest = {
-                commentId,
-                voteType: type,
+        mutationFn: async (voteType: VoteType) => {
+            const payload: PostVoteRequest = {
+                postId,
+                voteType,
             }
-            await axios.patch("/api/community/post/comment/vote", payload)
+            await axios.patch("/api/community/post/vote", payload)
         },
         onError: (err, voteType) => {
             if (voteType === "UP") setVotesAmount((prev => prev - 1));
@@ -52,15 +53,13 @@ export default function CommentVotes({ commentId, initialVotesAmount, initialVot
         },
         onMutate: (type: VoteType) => {
             //  If vote is same as before
-            if (currentVote?.type === type) {
-                //  remove vote
+            if (currentVote === type) {
                 setCurrentVote(undefined);
                 if (type === "UP") setVotesAmount((prev) => prev - 1);
                 else if (type === "DOWN") setVotesAmount((prev) => prev + 1);
             } else {
                 // If vote is not the same as before
-                setCurrentVote({type});
-                //  subtract 2
+                setCurrentVote(type);
                 if(type === "UP") setVotesAmount((prev) => prev + (currentVote ? 2 : 1));
                 else if(type === "DOWN") setVotesAmount((prev) => prev - (currentVote ? 2 : 1));
             }
@@ -68,11 +67,11 @@ export default function CommentVotes({ commentId, initialVotesAmount, initialVot
     })
 
     return (
-        <div className="flex gap-1">
+        <div className="flex sm:flex-col gap-4 sm:gap-0 pr-6 sm:w-20 pb-4 sm:pb-0">
             <Button onClick={() => vote("UP")}
                 size="sm" variant="ghost" aria-label="upvote" className="hover:bg-zinc-200 dark:hover:bg-zinc-800">
                 <ArrowBigUp className={cn("h-5 w-5 text-zinc-700", {
-                    "text-emerald-500 fill-emerald-500": currentVote?.type === "UP"
+                    "text-emerald-500 fill-emerald-500": currentVote === "UP"
                 })} />
             </Button>
 
@@ -80,7 +79,7 @@ export default function CommentVotes({ commentId, initialVotesAmount, initialVot
 
             <Button onClick={() => vote("DOWN")} size="sm" variant="ghost" aria-label="downvote" className="hover:bg-zinc-200 dark:hover:bg-zinc-800">
                 <ArrowBigDown className={cn("h-5 w-5 text-zinc-700", {
-                    "text-red-500 fill-red-500": currentVote?.type === "DOWN"
+                    "text-red-500 fill-red-500": currentVote === "DOWN"
                 })} />
             </Button>
         </div>)

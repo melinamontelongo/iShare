@@ -2,9 +2,9 @@
 
 import { Session } from "next-auth";
 import { usePathname, useRouter } from "next/navigation";
-import { UserAvatar } from "./UserAvatar";
-import { Input } from "./ui/Input";
-import { Button } from "./ui/Button";
+import { UserAvatar } from "../../ui/UserAvatar";
+import { Input } from "../../ui/Input";
+import { Button } from "../../ui/Button";
 import { BsLink, BsImage } from "react-icons/bs";
 
 interface MiniCreatePostProps {

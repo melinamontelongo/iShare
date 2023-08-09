@@ -1,5 +1,5 @@
-import SubscribeLeaveToggle from "@/components/SubscribeLeaveToggle"
-import ToFeedButton from "@/components/ToFeedButton"
+import SubscribeLeaveToggle from "@/components/community/SubscribeLeaveToggle"
+import ToFeedButton from "@/components/ui/ToFeedButton"
 import { buttonVariants } from "@/components/ui/Button"
 import { getAuthSession } from "@/lib/auth"
 import { prisma } from "@/lib/db"

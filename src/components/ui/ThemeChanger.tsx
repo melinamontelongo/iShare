@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import { useTheme } from "next-themes";
 import { BsFillSunFill, BsFillMoonFill } from "react-icons/bs";
-import { Button } from "./ui/Button";
+import { Button } from "./Button";
 export default function ThemeChanger() {
     const [mounted, setMounted] = useState(false);
     const { theme, setTheme, resolvedTheme } = useTheme();

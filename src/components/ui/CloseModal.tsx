@@ -1,6 +1,6 @@
 "use client"
 import { X } from "lucide-react";
-import { Button } from "./ui/Button";
+import { Button } from "./Button";
 import { useRouter } from "next/navigation";
 
 export default function CloseModal (){

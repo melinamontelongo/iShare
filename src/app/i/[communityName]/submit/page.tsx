@@ -1,4 +1,4 @@
-import Editor from "@/components/Editor";
+import Editor from "@/components/post/create/Editor";
 import { Button } from "@/components/ui/Button";
 import { prisma } from "@/lib/db"
 import { notFound } from "next/navigation"
