@@ -1,25 +1,25 @@
 "use client"
 import { useIntersection } from "@mantine/hooks"
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { INFINITE_SCROLLING_PAGINATION_RESULTS } from "@/config";
-import axios from "axios";
 import { ExtendedPost } from "@/types/extended-post";
 import { useSession } from "next-auth/react";
 import { Ring } from '@uiball/loaders'
 import { useTheme } from "next-themes";
+import axios from "axios";
 import Post from "./Post";
 
+type InitialPosts = {
+    count: number,
+    posts: ExtendedPost[],
+}
 interface PostFeedProps {
-    initialPosts: {
-        count: number,
-        posts: ExtendedPost[],
-    },
+    initialPosts: InitialPosts,
     communityName?: string,
 }
 
 export default function PostFeed({ initialPosts, communityName }: PostFeedProps) {
-
     const { resolvedTheme } = useTheme();
 
     const lastPostRef = useRef<HTMLElement>(null);
@@ -31,7 +31,7 @@ export default function PostFeed({ initialPosts, communityName }: PostFeedProps)
     const { data: session } = useSession();
 
     const { data, fetchNextPage, isFetchingNextPage, hasNextPage } = useInfiniteQuery({
-        queryKey: ["infiniteQuery"],
+        queryKey: ["postsInfiniteQuery"],
         queryFn: async ({ pageParam = 1 }) => {
             const query = `/api/posts?limit=${INFINITE_SCROLLING_PAGINATION_RESULTS}&page=${pageParam}` +
                 (!!communityName ? `&communityName=${communityName}` : "");
@@ -46,8 +46,8 @@ export default function PostFeed({ initialPosts, communityName }: PostFeedProps)
                 return undefined;
             }
         },
-        initialData: { pages: [initialPosts], pageParams: [1] }
-    })
+        initialData: { pages: [initialPosts], pageParams: [1] },
+    });
 
     useEffect(() => {
         if (entry?.isIntersecting) {
@@ -58,7 +58,7 @@ export default function PostFeed({ initialPosts, communityName }: PostFeedProps)
     const posts: ExtendedPost[] = data?.pages.flatMap((page) => page.posts) ?? initialPosts.posts;
  
     return <ul className="flex flex-col col-span-2 space-y-6">
-        {posts.map((post, index) => {
+        {posts.length > 0 ? posts.map((post, index) => {
             const votesAmount = post.votes.reduce((acc, vote) => {
                 if (vote.type === "UP") return acc + 1;
                 if (vote.type === "DOWN") return acc - 1;
@@ -88,7 +88,10 @@ export default function PostFeed({ initialPosts, communityName }: PostFeedProps)
                         post={post} />
                 )
             }
-        })}
+        }) 
+        : 
+        <p>No posts on {communityName}. Create the first one!</p>
+        }
         {isFetchingNextPage &&
             <div className="flex justify-center">
                 <Ring

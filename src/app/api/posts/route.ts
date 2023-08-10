@@ -1,7 +1,6 @@
 import { getAuthSession } from "@/lib/auth";
 import { prisma } from "@/lib/db";
 import { ExtendedPost } from "@/types/extended-post";
-import { Session } from "next-auth";
 import { z } from "zod";
 
 export async function GET(req: Request) {

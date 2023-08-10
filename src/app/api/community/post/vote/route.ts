@@ -4,8 +4,8 @@ import { redis } from "@/lib/validators/redis";
 import { PostVoteValidator } from "@/lib/validators/vote"
 import { CachedPost } from "@/types/redis";
 import { z } from "zod";
-//  High engagement for caching
-const CACHE_AFTER_UPVOTES = 1;
+//  Cache posts with high engagement
+const CACHE_AFTER_UPVOTES = 25;
 
 export async function PATCH(req: Request) {
     try {
@@ -31,6 +31,7 @@ export async function PATCH(req: Request) {
             include: {
                 author: true,
                 votes: true,
+                community: true,
             }
         })
         if (!post) {
@@ -71,7 +72,9 @@ export async function PATCH(req: Request) {
             //  Cache popular posts
             if (votesAmount >= CACHE_AFTER_UPVOTES) {
                 const cachePayload: CachedPost = {
+                    authorId: post.authorId,
                     authorUsername: post.author.username ?? "",
+                    communityName: post.community.name,
                     content: JSON.stringify(post.content),
                     id: post.id,
                     title: post.title,
@@ -100,6 +103,8 @@ export async function PATCH(req: Request) {
         if (votesAmount >= CACHE_AFTER_UPVOTES) {
             const cachePayload: CachedPost = {
                 authorUsername: post.author.username ?? "",
+                authorId: post.authorId,
+                communityName: post.community.name,
                 content: JSON.stringify(post.content),
                 id: post.id,
                 title: post.title,
