@@ -76,6 +76,24 @@ export async function GET(req: Request) {
                 },
                 where: whereClause,
             })
+            //  If there are no posts from communities the user is subscribed to (and req is not coming from community page)
+            if (posts.length <= 0 && !communityName) {
+                postsCount = await prisma.post.count();
+                posts = await prisma.post.findMany({
+                    take: parseInt(limit),
+                    //  skip posts already shown
+                    skip: (parseInt(page) - 1) * parseInt(limit),
+                    orderBy: {
+                        createdAt: "desc",
+                    },
+                    include: {
+                        community: true,
+                        votes: true,
+                        author: true,
+                        comments: true,
+                    },
+                });
+            }
         } else {
             postsCount = await prisma.post.count();
             posts = await prisma.post.findMany({

@@ -41,8 +41,8 @@ export default async function communityPage({ params }: PageProps) {
     if (!community) return notFound()
 
     return <>
-        <h1 className="font-bold text-3xl md:text-4xl h-14">i/{community.name}</h1>
+        <h1 className="font-bold text-3xl md:text-4xl h-14 md:block hidden">i/{community.name}</h1>
         <MiniCreatePost session={session} />
-        <PostFeed initialPosts={{count: communityPostsCount, posts: community.posts}} communityName={community.name} />
+        <PostFeed initialPosts={{ count: communityPostsCount, posts: community.posts }} communityName={community.name} />
     </>
 }

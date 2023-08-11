@@ -25,12 +25,7 @@ export default async function submit({params}:PageProps){
             <p className="ml-2 mt-1 truncate text-sm text-gray-500">In i/{community.name}</p>
             </div>
         </div>
-        {/* form */}
         <Editor communityId={community.id} />
-
-        <div className="w-full flex justify-end">
-            <Button type="submit" className="bg-zinc-900 dark:bg-zinc-50 hover:dark:bg-zinc-300 hover:bg-zinc-800" form="community-post-form">Post</Button>
-        </div>
     </div>
     )
 }

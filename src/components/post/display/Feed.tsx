@@ -20,7 +20,6 @@ export default async function Feed() {
         },
         take: INFINITE_SCROLLING_PAGINATION_RESULTS,
     });
-
     //  Not logged user
     if (!session?.user) {
         return <PostFeed initialPosts={{ count: generalPostsCount, posts: generalPosts }} />
@@ -66,7 +65,13 @@ export default async function Feed() {
                 },
                 take: INFINITE_SCROLLING_PAGINATION_RESULTS
             });
-            return <PostFeed initialPosts={{ count: customizedPostsCount, posts: customizedPosts }} />
+
+            if (customizedPosts.length > 0) {
+                return <PostFeed initialPosts={{ count: customizedPostsCount, posts: customizedPosts }} />
+            } else {
+                //  There are no posts from communities the user follows
+                return <PostFeed initialPosts={{ count: generalPostsCount, posts: generalPosts }} />
+            }
             //  User has no subscriptions
         } else {
             return <PostFeed initialPosts={{ count: generalPostsCount, posts: generalPosts }} />

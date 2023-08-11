@@ -7,6 +7,7 @@ import { ExtendedPost } from "@/types/extended-post";
 import { useSession } from "next-auth/react";
 import { Ring } from '@uiball/loaders'
 import { useTheme } from "next-themes";
+import { usePathname } from "next/navigation";
 import axios from "axios";
 import Post from "./Post";
 
@@ -21,7 +22,7 @@ interface PostFeedProps {
 
 export default function PostFeed({ initialPosts, communityName }: PostFeedProps) {
     const { resolvedTheme } = useTheme();
-
+    const pathname = usePathname();
     const lastPostRef = useRef<HTMLElement>(null);
 
     const { ref, entry } = useIntersection({
@@ -56,8 +57,9 @@ export default function PostFeed({ initialPosts, communityName }: PostFeedProps)
     }, [entry, fetchNextPage]);
 
     const posts: ExtendedPost[] = data?.pages.flatMap((page) => page.posts) ?? initialPosts.posts;
- 
-    return <ul className="flex flex-col col-span-2 space-y-6">
+
+    return (
+    <ul className="flex flex-col col-span-2 space-y-6">
         {posts.length > 0 ? posts.map((post, index) => {
             const votesAmount = post.votes.reduce((acc, vote) => {
                 if (vote.type === "UP") return acc + 1;
@@ -88,9 +90,9 @@ export default function PostFeed({ initialPosts, communityName }: PostFeedProps)
                         post={post} />
                 )
             }
-        }) 
-        : 
-        <p>No posts on {communityName}. Create the first one!</p>
+        })
+            :
+            pathname.includes(`/${communityName}`) && <p className="mx-auto">No posts on <span className="font-bold">i/{communityName}</span>. Create the first one!</p>
         }
         {isFetchingNextPage &&
             <div className="flex justify-center">
@@ -103,4 +105,5 @@ export default function PostFeed({ initialPosts, communityName }: PostFeedProps)
             </div>
         }
     </ul>
+    )
 }

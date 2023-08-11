@@ -11,6 +11,7 @@ import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { usePathname, useRouter } from "next/navigation";
 import "../../../styles/editor.css";
+import { Button } from "@/components/ui/Button";
 
 interface EditorProps {
     communityId: string,
@@ -18,7 +19,7 @@ interface EditorProps {
 export default function Editor({ communityId }: EditorProps) {
     const pathname = usePathname();
     const router = useRouter();
-    const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<PostCreationRequest>({
+    const { register, handleSubmit, formState: { errors } } = useForm<PostCreationRequest>({
         resolver: zodResolver(PostValidator),
         defaultValues: {
             communityId,
@@ -126,7 +127,7 @@ export default function Editor({ communityId }: EditorProps) {
         }
     }, [errors])
 
-    const { mutate: createPost } = useMutation({
+    const { mutate: createPost, isLoading: isSubmitting } = useMutation({
         mutationFn: async ({ title, content, communityId }: PostCreationRequest) => {
             const payload: PostCreationRequest = {
                 title,
@@ -168,7 +169,7 @@ export default function Editor({ communityId }: EditorProps) {
         return null
     };
 
-    return (
+    return (<>
         <div className="sm:w-full w-screen p-4 rounded-lg border border-zinc-200 dark:border-zinc-800 ">
             <form
                 id="community-post-form"
@@ -189,5 +190,9 @@ export default function Editor({ communityId }: EditorProps) {
                 </div>
             </form>
         </div>
+        <div className="w-full flex justify-end">
+            <Button isLoading={isSubmitting} type="submit" className="bg-zinc-900 dark:bg-zinc-50 hover:dark:bg-zinc-300 hover:bg-zinc-800" form="community-post-form">Post</Button>
+        </div>
+    </>
     )
 }
