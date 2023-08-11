@@ -1,13 +1,13 @@
 import Link from "next/link";
 import AuthGoogle from "./AuthGoogle";
 import SignUpCredentials from "./SignUpCredentials";
-
+import Image from "next/image";
 export default function SignUp() {
     return (
         <div className="container mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[400px]">
             <div className="flex flex-col space-y-2 text-center">
-                <h2 className="sm:text-4xl text-xl font-bold text-teal-500 dark:text-teal-600">iShare</h2>
-                <h1 className="text-xl font-semibold tracking-tight">Sign Up</h1>
+                <Image src="/ishare_logo.png" alt="ishare logo" height={150} width={150} style={{ margin: "auto" }} />
+                <h1 className="text-xl font-semibold tracking-tight">Join us!</h1>
             </div>
             <SignUpCredentials />
             <p className="text-xs text-center">Or continue with</p>

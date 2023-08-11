@@ -3,6 +3,7 @@ import ThemeChanger from "../ui/ThemeChanger";
 import { getAuthSession } from "@/lib/auth";
 import UserAccountNav from "./UserAccountNav";
 import Searchbar from "./Searchbar";
+import Image from "next/image";
 
 export default async function Navbar() {
     const session = await getAuthSession();
@@ -12,8 +13,9 @@ export default async function Navbar() {
                 <div className="flex items-center gap-2">
                     <Link className="block text-teal-500 dark:text-teal-600" href="/">
                         <span className="sr-only">Home</span>
-                        <h2 className="md:text-4xl text-xl font-bold sm:block hidden">iShare</h2>
-                        <h2 className="sm:hidden text-4xl font-bold">iS</h2>
+                        <Image src="/ishare_logo.png" alt="ishare logo" height={100} width={100} />
+                        {/* <h2 className="md:text-4xl text-xl font-bold sm:block hidden">iShare</h2>
+                        <h2 className="sm:hidden text-4xl font-bold">iS</h2> */}
                     </Link>
 
                     <Searchbar />
