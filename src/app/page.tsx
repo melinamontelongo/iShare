@@ -10,7 +10,7 @@ export const fetchCache = "force-no-store";
 export default async function Home() {
   const session = await getAuthSession();
   return (
-    <>
+    <div className="pt-12 px-2">
       <h1 className="font-bold text-3xl md:text-4xl">Your feed</h1>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-y-4 md:gap-x-4 py-6">
         {/* feed */}
@@ -36,6 +36,6 @@ export default async function Home() {
           <Link href="/i/create" className={buttonVariants({ className: "w-full mt-4 bg-zinc-900 hover:bg-zinc-800 dark:bg-zinc-50 dark:hover:bg-zinc-100" })}>Create community</Link>
         </div>
       </div>
-    </>
+    </div>
   )
 }
