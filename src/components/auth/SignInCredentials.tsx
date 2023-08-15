@@ -33,8 +33,7 @@ export default function SignInCredentials() {
             //  No error
         } else {
             toast({ title: "Successfully logged in!" });
-            router.refresh();
-            router.push("/");
+            window.location.reload();
         }
         setIsLoading(false);
     };

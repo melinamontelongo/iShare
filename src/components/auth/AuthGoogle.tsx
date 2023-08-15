@@ -16,8 +16,6 @@ export default function AuthGoogle() {
         try {
             await signIn("google");
             toast({ title: "Successfully logged in!" });
-            router.refresh();
-            router.push("/");
         } catch (error) {
             toast({
                 title: "There was a problem.",

@@ -2,7 +2,15 @@ import Link from "next/link";
 import AuthGoogle from "./AuthGoogle";
 import SignUpCredentials from "./SignUpCredentials";
 import Image from "next/image";
-export default function SignUp() {
+import { getAuthSession } from "@/lib/auth";
+import { redirect } from "next/navigation";
+
+export const dynamic = "force-dynamic";
+export const fetchCache = "force-no-store";
+
+export default async function SignUp() {
+    const session = await getAuthSession();
+    if(session?.user) return redirect("/");
     return (
         <div className="container mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[400px]">
             <div className="flex flex-col space-y-2 text-center">
