@@ -8,7 +8,7 @@ import type EditorJS from "@editorjs/editorjs";
 import { uploadFiles } from "@/lib/uploadthing";
 import { toast } from "@/hooks/use-toast";
 import { useMutation } from "@tanstack/react-query";
-import axios from "axios";
+import axios, { isAxiosError } from "axios";
 import { usePathname, useRouter } from "next/navigation";
 import "../../../styles/editor.css";
 import { Button } from "@/components/ui/Button";
@@ -137,7 +137,14 @@ export default function Editor({ communityId }: EditorProps) {
             const { data } = await axios.post("/api/community/post/create", payload)
             return data;
         },
-        onError: () => {
+        onError: (e) => {
+            if (isAxiosError(e)) {
+                return toast({
+                    title: "Your post was not published",
+                    description: `${e?.response?.data ?? ""}`,
+                    variant: "destructive"
+                })
+            };
             return toast({
                 title: "Something went wrong",
                 description: "Your post was not published, please try again later",
