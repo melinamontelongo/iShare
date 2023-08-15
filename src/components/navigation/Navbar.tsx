@@ -8,10 +8,10 @@ import Image from "next/image";
 export default async function Navbar() {
     const session = await getAuthSession();
     return (<> 
-        <header className="bg-zinc-50 dark:bg-zinc-950 h-fit shadow-sm fixed top-0 left-0 right-0 z-50 px-4 sm:px-6 lg:px-8 py-2">
+        <header className="bg-zinc-50 dark:bg-zinc-950 h-fit shadow-sm fixed top-0 left-0 right-0 z-50 px-2 py-1">
             <div className="flex flex-row justify-between items-center">
                 <div className="flex items-center gap-2">
-                    <Link className="text-teal-500 dark:text-teal-600 sm:block hidden md:px-5 md:py-2.5 px-3 py-2" href="/">
+                    <Link className="text-teal-500 dark:text-teal-600 sm:block hidden md:px-4 px-2 py-2" href="/">
                         <span className="sr-only">Home</span>
                         <Image src="/ishare_logo.png" alt="ishare logo" height={100} width={100} />
                     </Link>
