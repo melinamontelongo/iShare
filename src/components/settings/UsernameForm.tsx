@@ -77,7 +77,7 @@ export default function UsernameForm({ user }: UsernameFormProps) {
                     </div>
                 </CardContent>
                 <CardFooter>
-                    <Button isLoading={isLoading} className="hover:dark:bg-zinc-200 hover:bg-zinc-800">Change name</Button>
+                    <Button isLoading={isLoading} className="bg-zinc-900 dark:bg-zinc-50 hover:dark:bg-zinc-300 hover:bg-zinc-800">Change name</Button>
                 </CardFooter>
             </Card>
         </form>

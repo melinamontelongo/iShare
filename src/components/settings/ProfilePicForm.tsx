@@ -84,7 +84,7 @@ const ProfilePicForm = ({ currentPic }: ProfilePicFormProps) => {
                 }} />
             </CardContent>
             <CardFooter>
-                <Button isLoading={isLoading} className="hover:dark:bg-zinc-200 hover:bg-zinc-800" onClick={() => submitPic()}>Submit profile picture</Button>
+                <Button isLoading={isLoading} className="bg-zinc-900 dark:bg-zinc-50 hover:dark:bg-zinc-300 hover:bg-zinc-800" onClick={() => submitPic()}>Submit profile picture</Button>
             </CardFooter>
         </Card>
     )
