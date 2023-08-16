@@ -27,7 +27,7 @@ export default function UsernameForm({ user }: UsernameFormProps) {
     const { mutate: updateUsername, isLoading } = useMutation({
         mutationFn: async ({ name }: UsernameRequest) => {
             const payload: UsernameRequest = { name }
-            const { data } = await axios.patch(`/api/username`, payload)
+            const { data } = await axios.patch(`/api/profile/username`, payload)
             return data;
         },
         onError: (err) => {
@@ -60,7 +60,7 @@ export default function UsernameForm({ user }: UsernameFormProps) {
             <Card className="bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800">
                 <CardHeader>
                     <CardTitle>Your username</CardTitle>
-                    <CardDescription>
+                    <CardDescription className="text-zinc-400 dark:text-zinc-600">
                         Please enter a display name you are comfortable with.
                     </CardDescription>
                 </CardHeader>
