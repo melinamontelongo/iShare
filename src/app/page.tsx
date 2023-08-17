@@ -28,7 +28,11 @@ export default async function Home() {
           <div className="px-6 text-sm leading-6">
             <div className="flex justify-between gap-x-4 py-3">
               <p className="text-zinc-600 dark:text-zinc-500">
-                Your personal iShare homepage. Come here to check in with your favorite communities.
+                {session?.user ?
+                  "Your personal iShare homepage. Come here to check in with your favorite communities."
+                  :
+                  "Come here to see the latest posts from different communities on iShare."
+                }
               </p>
             </div>
           </div>
