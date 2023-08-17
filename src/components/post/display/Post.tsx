@@ -15,7 +15,7 @@ type PartialVote = Pick<Vote, "type">
 interface PostProps {
     communityName: string,
     post: Post & {
-        author: User,
+        author: Pick<User, "name" | "username" | "image" | "email">,
         votes: Vote[]
     },
     commentAmount: number,

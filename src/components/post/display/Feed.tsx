@@ -59,13 +59,19 @@ export default async function Feed() {
                 },
                 include: {
                     votes: true,
-                    author: true,
+                    author: {
+                        select: {
+                            username: true,
+                            image: true,
+                            name: true,
+                            email: true,
+                        }
+                    },
                     comments: true,
                     community: true,
                 },
                 take: INFINITE_SCROLLING_PAGINATION_RESULTS
             });
-
             if (customizedPosts.length > 0) {
                 return <PostFeed initialPosts={{ count: customizedPostsCount, posts: customizedPosts }} />
             } else {

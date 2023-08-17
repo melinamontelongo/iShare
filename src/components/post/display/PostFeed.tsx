@@ -59,51 +59,53 @@ export default function PostFeed({ initialPosts, communityName }: PostFeedProps)
     const posts: ExtendedPost[] = data?.pages.flatMap((page) => page.posts) ?? initialPosts.posts;
 
     return (
-    <ul className="flex flex-col col-span-2 space-y-6">
-        {posts.length > 0 ? posts.map((post, index) => {
-            const votesAmount = post.votes.reduce((acc, vote) => {
-                if (vote.type === "UP") return acc + 1;
-                if (vote.type === "DOWN") return acc - 1;
-                return acc;
-            }, 0)
+        <ul className="flex flex-col col-span-2 space-y-6">
+            {posts.length > 0 ? posts.map((post, index, array) => {
+                const votesAmount = post.votes.reduce((acc, vote) => {
+                    if (vote.type === "UP") return acc + 1;
+                    if (vote.type === "DOWN") return acc - 1;
+                    return acc;
+                }, 0)
 
-            const currentUserVoted = post.votes.find((vote) => vote.userId === session?.user.id)
+                const currentUserVoted = post.votes.find((vote) => vote.userId === session?.user.id)
 
-            if (index === posts.length - 1) {
-                return (
-                    <li key={post.id} ref={ref}>
-                        <Post
-                            currentVote={currentUserVoted}
-                            votesAmount={votesAmount}
-                            commentAmount={post.comments.length}
-                            communityName={post.community.name}
-                            post={post} />
-                    </li>
-                )
-            } else {
-                return (
-                    <Post key={post.id}
-                        currentVote={currentUserVoted}
-                        votesAmount={votesAmount}
-                        commentAmount={post.comments.length}
-                        communityName={post.community.name}
-                        post={post} />
-                )
+                if (index === posts.length - 1) {
+                    return (
+                        <li key={post.id} ref={ref}>
+                            <Post
+                                currentVote={currentUserVoted}
+                                votesAmount={votesAmount}
+                                commentAmount={post.comments.length}
+                                communityName={post.community.name}
+                                post={post} />
+                        </li>
+                    )
+                } else {
+                    if (!array[index - 1] && array[index]?.id !== array[index - 1]?.id) {
+                        return (
+                            <Post key={post.id}
+                                currentVote={currentUserVoted}
+                                votesAmount={votesAmount}
+                                commentAmount={post.comments.length}
+                                communityName={post.community.name}
+                                post={post} />
+                        )
+                    }
+                }
+            })
+                :
+                pathname.includes(`/${communityName}`) && <p className="mx-auto">No posts on <span className="font-bold">i/{communityName}</span>. Create the first one!</p>
             }
-        })
-            :
-            pathname.includes(`/${communityName}`) && <p className="mx-auto">No posts on <span className="font-bold">i/{communityName}</span>. Create the first one!</p>
-        }
-        {isFetchingNextPage &&
-            <div className="flex justify-center">
-                <Ring
-                    size={30}
-                    lineWeight={5}
-                    speed={2}
-                    color={`${resolvedTheme === "dark" ? "#f4f4f5" : "#18181b"}`}
-                />
-            </div>
-        }
-    </ul>
+            {isFetchingNextPage &&
+                <div className="flex justify-center">
+                    <Ring
+                        size={30}
+                        lineWeight={5}
+                        speed={2}
+                        color={`${resolvedTheme === "dark" ? "#f4f4f5" : "#18181b"}`}
+                    />
+                </div>
+            }
+        </ul>
     )
 }
