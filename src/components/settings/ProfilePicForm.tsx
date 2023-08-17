@@ -30,9 +30,18 @@ const ProfilePicForm = ({ currentPic }: ProfilePicFormProps) => {
                 };
                 const { data } = await axios.put(`/api/profile/picture`, payload);
                 return data;
+            } else {
+                throw new Error("Please choose a profile picture to submit.")
             }
         },
-        onError: (err) => {
+        onError: (err: Error) => {
+            if (err.message) {
+                return toast({
+                    title: "There was an error",
+                    description: err.message,
+                    variant: "destructive"
+                })
+            }
             return toast({
                 title: "There was an error",
                 description: "Could not submit your profile picture.",
@@ -66,7 +75,7 @@ const ProfilePicForm = ({ currentPic }: ProfilePicFormProps) => {
             <CardHeader>
                 <CardTitle>Your profile picture</CardTitle>
             </CardHeader>
-            <CardContent className="flex flex-row gap-2">
+            <CardContent className="flex flex-row gap-2 items-center">
                 <Avatar>
                     <div className='relative aspect-square h-full w-full'>
                         {(currentPreviewPic) ?
@@ -78,7 +87,7 @@ const ProfilePicForm = ({ currentPic }: ProfilePicFormProps) => {
                         }
                     </div>
                 </Avatar>
-                <Input type="file" className="bg-transparent border border-zinc-200 dark:border-zinc-800 cursor-pointer" onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                <Input type="file" className="bg-transparent border-0 file:cursor-pointer file:bg-zinc-50 file:dark:bg-zinc-950 file:rounded file:py-2 file:px-4 h-fit" onChange={(e: ChangeEvent<HTMLInputElement>) => {
                     e.target.files && displayPic(e.target.files)
                     setFile(e.target.files ?? undefined)
                 }} />
