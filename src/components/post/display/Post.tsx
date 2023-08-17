@@ -1,11 +1,14 @@
-import { formatTimeToNow } from "@/lib/utils"
-import { Post, User, Vote } from "@prisma/client"
-import { MessageSquare } from "lucide-react"
-import { useRef } from "react"
-import EditorOutput from "../create/EditorOutput"
-import PostVoteClient from "../post-vote/PostVoteClient"
-import DeletePost from "../delete/DeletePost"
-import { useSession } from "next-auth/react"
+"use client"
+import { formatTimeToNow } from "@/lib/utils";
+import { Post, User, Vote } from "@prisma/client";
+import { MessageSquare } from "lucide-react";
+import { useRef } from "react";
+import EditorOutput from "../create/EditorOutput";
+import PostVoteClient from "../post-vote/PostVoteClient";
+import DeletePost from "../delete/DeletePost";
+import { useSession } from "next-auth/react";
+import { UserAvatar } from "@/components/ui/UserAvatar";
+import { usePathname, useRouter } from "next/navigation";
 
 type PartialVote = Pick<Vote, "type">
 
@@ -21,11 +24,13 @@ interface PostProps {
 }
 
 export default function Post({ communityName, post, commentAmount, votesAmount, currentVote }: PostProps) {
-    const postRef = useRef<HTMLDivElement>(null)
+    const postRef = useRef<HTMLDivElement>(null);
+    const router = useRouter();
     const session = useSession();
+    const pathname = usePathname();
 
-    return (
-        <div className="rounded-md shadow">
+    return (<>
+        <div className="rounded-md shadow hover:bg-zinc-200 dark:hover:bg-zinc-800 group p-4 cursor-pointer" onClick={() => router.push(`/i/${communityName}/post/${post.id}`)}>
             <div className="px-6 flex justify-between">
                 <PostVoteClient
                     postId={post.id}
@@ -35,25 +40,31 @@ export default function Post({ communityName, post, commentAmount, votesAmount, 
                 <div className="w-0 flex-1">
                     <div className="flex justify-between">
                         <div>
-                            <div className="max-h-40 mt-1 text-xs">
-                                {communityName ? (
-                                    <>{/* anchor to force hard reload */}
-                                        <a className="underline text-sm underline-offset-2" href={`/i/${communityName}`}>
+                            <div className="max-h-40 mt-1 text-xs flex items-center">
+                                <div className="flex items-center gap-2">
+                                    <UserAvatar user={post.author} />
+                                    <p className="flex gap-2">
+                                        <span className="font-bold text-zinc-700 dark:text-zinc-300">u/{post.author.username} </span>
+                                        ·
+                                        <span className="text-zinc-600 dark:text-zinc-500">{formatTimeToNow(new Date(post.createdAt))}</span>
+                                    </p>
+                                </div>
+
+                                {communityName && !pathname.includes(communityName) && (
+                                    <><p className="ml-2 text-zinc-700 dark:text-zinc-300">
+                                        ·
+                                        <span> on </span>
+                                        <a className="hover:underline font-bold" href={`/i/${communityName}`}>
                                             i/{communityName}
                                         </a>
-                                        <span className="px-1">-</span>
+                                    </p>
                                     </>
-                                )
-                                    : null}
-                                <span>Posted by u/{post.author.username}</span>{" "}
-                                {formatTimeToNow(new Date(post.createdAt))}
+                                )}
                             </div>
 
-                            <a href={`/i/${communityName}/post/${post.id}`}>
-                                <h1 className="text-lg font-semibold py-2 leading-6">
-                                    {post.title}
-                                </h1>
-                            </a>
+                            <h1 className="text-lg font-semibold py-2 leading-6">
+                                {post.title}
+                            </h1>
                         </div>
                         {session.data?.user.id === post.authorId && (
                             <div>
@@ -68,7 +79,7 @@ export default function Post({ communityName, post, commentAmount, votesAmount, 
 
                         {postRef.current?.clientHeight === 160 ? (
                             /* apply gradient if exceeding height */
-                            <div className="absolute bottom-0 left-0 h-24 w-full bg-gradient-to-t from-zinc-50 to-transparent dark:from-zinc-900"></div>
+                            <div className="absolute bottom-0 left-0 h-24 w-full bg-gradient-to-t from-zinc-50 to-transparent dark:from-zinc-900 group-hover:from-zinc-200 dark:group-hover:from-zinc-800"></div>
                         ) : null
                         }
                     </div>
@@ -80,5 +91,5 @@ export default function Post({ communityName, post, commentAmount, votesAmount, 
                     <MessageSquare className="h-4 w-4" /> {commentAmount} comments
                 </a>
             </div>
-        </div>)
+        </div></>)
 }
