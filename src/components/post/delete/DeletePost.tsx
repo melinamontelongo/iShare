@@ -44,7 +44,7 @@ export default function DeletePost({ postId, communityName }: DeletePostProps) {
     return (
         <DropdownMenu>
             <DropdownMenuTrigger>
-                <MoreVertical />
+                <MoreVertical className="h-4 w-4 mr-1" />
             </DropdownMenuTrigger>
             <DropdownMenuContent className="bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800" align="end">
                 <DropdownMenuItem asChild className="cursor-pointer hover:bg-zinc-100 dark:hover:bg-zinc-900">

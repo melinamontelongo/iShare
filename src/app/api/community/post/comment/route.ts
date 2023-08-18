@@ -28,3 +28,24 @@ export async function PATCH(req: Request) {
         return new Response("Could not create comment, please try again later.", { status: 500 })
     }
 }
+
+export async function DELETE(req:Request){
+    try {
+        const session = await getAuthSession();
+        if (!session?.user) return new Response("Unauthorized", { status: 401 })
+
+        const url = new URL(req.url);
+        const commentId = url.searchParams.get("id");
+        if(!commentId) return new Response("Invalid query", { status: 400 });
+
+        await prisma.$queryRaw`DELETE FROM Comment WHERE id = ${commentId}`
+
+        return new Response("OK");
+    } catch (e) {
+        if (e instanceof z.ZodError) {
+            //  Wrong data was sent
+            return new Response("Invalid request data passed", { status: 422 })
+        }
+        return new Response("Could not delete comment, please try again later.", { status: 500 })
+    }
+}
