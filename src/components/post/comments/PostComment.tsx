@@ -6,7 +6,7 @@ import { Comment, CommentVote, User } from "@prisma/client";
 import { formatTimeToNow } from "@/lib/utils";
 import CommentVotes from "./CommentVotes";
 import { Button } from "../../ui/Button";
-import { MessageSquare, Trash } from "lucide-react";
+import { MessageSquare } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { Label } from "../../ui/Label";
@@ -19,7 +19,7 @@ import CommentDropdown from "./CommentDropdown";
 
 type ExtendedComment = Comment & {
     votes: CommentVote[],
-    author: User,
+    author: Pick<User, "name" | "username" | "image" | "id">,
 }
 interface PostCommentProps {
     comment: ExtendedComment,
@@ -29,7 +29,6 @@ interface PostCommentProps {
 }
 
 export default function PostComment({ comment, votesAmount, currentVote, postId }: PostCommentProps) {
-    console.log(comment)
     const commentRef = useRef<HTMLDivElement>(null);
     const router = useRouter();
     const { data: session } = useSession();

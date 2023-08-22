@@ -14,20 +14,31 @@ export default async function CommentSection({ postId }: CommentSectionProps) {
     const comments = await prisma.comment.findMany({
         where: {
             postId,
-            //  Top comment
-            replyToId: null,
         },
         include: {
             author: true,
             votes: true,
             replies: {
                 include: {
-                    author: true,
+                    author: {
+                        select: {
+                            name: true,
+                            username: true,
+                            id: true,
+                            image: true,
+                        }
+                    },
                     votes: true,
                 },
             },
         },
     })
+    //  Deleted comments' replies
+    const deletedCommentReplies = comments.filter((comment) => comment.replyToId && !comment.commentId);
+    const deletedOriginalCommentIds = deletedCommentReplies.map((comment, i, arr) => {
+        if (comment.replyToId !== arr[i - 1]?.replyToId) return comment.replyToId;
+        return null;
+    }).filter((id) => id);
 
     return (
         <div className="flex flex-col gap-y-4 mt-4">
@@ -76,6 +87,37 @@ export default async function CommentSection({ postId }: CommentSectionProps) {
                                         />
                                     </div>
                                 })}
+                        </div>
+                    )
+                })}
+                {/* REPLIES WHERE ORIGINAL COMMENT HAS BEEN DELETED */}
+                {deletedOriginalCommentIds.map((id) => {
+                    const replies = deletedCommentReplies.filter((comment) => comment.replyToId === id);
+                    return (
+                        <div key={id} className="flex flex-col">
+                            <div className="mb-5 flex items-center gap-5">
+                                <p className="italic">
+                                This comment has been deleted
+                                </p>
+                                
+                            </div>
+                            {replies.map((reply) => {
+                                const replyVotesAmount = reply.votes.reduce((acc, vote) => {
+                                    if (vote.type === "UP") return acc + 1;
+                                    if (vote.type === "DOWN") return acc - 1;
+                                    return acc;
+                                }, 0)
+                                //  User has voted
+                                const replyVote = reply.votes.find((vote) => vote.userId === session?.user.id)
+                                return (
+                                    <div key={reply.id} className="ml-2 py-2 pl-4 border-l-2 border-zinc-200">
+                                        <PostComment comment={reply}
+                                            currentVote={replyVote}
+                                            votesAmount={replyVotesAmount}
+                                            postId={postId} />
+                                    </div>
+                                )
+                            })}
                         </div>
                     )
                 })}

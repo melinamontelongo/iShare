@@ -57,7 +57,7 @@ export default function PostFeed({ initialPosts, communityName }: PostFeedProps)
     }, [entry, fetchNextPage]);
 
     const posts: ExtendedPost[] = data?.pages.flatMap((page) => page.posts) ?? initialPosts.posts;
-    console.log("POSTS", posts)
+    
     return (
         <ul className="flex flex-col col-span-2 space-y-6">
             {posts.length > 0 ? posts.map((post, index, array) => {
