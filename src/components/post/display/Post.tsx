@@ -88,7 +88,11 @@ export default function Post({ communityName, post, commentAmount, votesAmount, 
 
             <div className="z-20 text-sm p-4 sm:px-6">
                 <a className="w-fit flex items-center gap-2" href={`/i/${communityName}/post/${post.id}`}>
-                    <MessageSquare className="h-4 w-4" /> {commentAmount} comments
+                    <MessageSquare className="h-4 w-4" /> {commentAmount > 0 ?
+                        `${commentAmount} ${commentAmount === 1 ? "comment" : "comments"}` 
+                        : 
+                        "No comments"
+                        }
                 </a>
             </div>
         </div></>)
