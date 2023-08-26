@@ -16,7 +16,19 @@ export default async function CommentSection({ postId }: CommentSectionProps) {
             postId,
         },
         include: {
-            author: true,
+            author: {
+                select: {
+                    name: true,
+                    username: true,
+                    id: true,
+                    image: true,
+                }
+            },
+            replyTo: {
+                select: {
+                    id: true
+                }
+            },
             votes: true,
             replies: {
                 include: {
@@ -29,17 +41,22 @@ export default async function CommentSection({ postId }: CommentSectionProps) {
                         }
                     },
                     votes: true,
+                    replyTo: {
+                        select: {
+                            id: true,
+                        }
+                    }
                 },
             },
         },
     })
     //  Deleted comments' replies
-    const deletedCommentReplies = comments.filter((comment) => comment.replyToId && !comment.commentId);
+    const deletedCommentReplies = comments.filter((comment) => comment.replyToId && !comment?.replyTo?.id);
     const deletedOriginalCommentIds = deletedCommentReplies.map((comment, i, arr) => {
         if (comment.replyToId !== arr[i - 1]?.replyToId) return comment.replyToId;
         return null;
     }).filter((id) => id);
-
+    console.log("REPLIES", deletedCommentReplies);
     return (
         <div className="flex flex-col gap-y-4 mt-4">
             <hr className="border border-zinc-200 dark:border-zinc-800 w-full h-px my-6" />
@@ -97,9 +114,9 @@ export default async function CommentSection({ postId }: CommentSectionProps) {
                         <div key={id} className="flex flex-col">
                             <div className="mb-5 flex items-center gap-5">
                                 <p className="italic">
-                                This comment has been deleted
+                                    This comment has been deleted
                                 </p>
-                                
+
                             </div>
                             {replies.map((reply) => {
                                 const replyVotesAmount = reply.votes.reduce((acc, vote) => {
