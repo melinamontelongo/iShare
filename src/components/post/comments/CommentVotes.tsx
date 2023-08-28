@@ -60,9 +60,8 @@ export default function CommentVotes({ commentId, initialVotesAmount, initialVot
             } else {
                 // If vote is not the same as before
                 setCurrentVote({type});
-                //  subtract 2
-                if(type === "UP") setVotesAmount((prev) => prev + (currentVote ? 2 : 1));
-                else if(type === "DOWN") setVotesAmount((prev) => prev - (currentVote ? 2 : 1));
+                if(type === "UP") setVotesAmount((prev) => prev + 1);
+                else if(type === "DOWN") setVotesAmount((prev) => prev - 1);
             }
         }
     })
