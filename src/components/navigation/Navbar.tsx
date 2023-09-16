@@ -11,14 +11,14 @@ export default async function Navbar() {
         <header className="bg-zinc-50 dark:bg-zinc-950 h-fit shadow-sm fixed top-0 left-0 right-0 z-50 px-2 py-1">
             <div className="flex flex-row justify-between items-center">
                 <div className="flex items-center gap-2">
-                    <Link className="text-teal-500 dark:text-teal-600 sm:block hidden md:px-4 px-2 py-2" href="/">
+                    <a className="text-teal-500 dark:text-teal-600 sm:block hidden md:px-4 px-2 py-2" href="/">
                         <span className="sr-only">Home</span>
                         <Image src="/ishare_logo.png" alt="ishare logo" height={100} width={100} />
-                    </Link>
-                    <Link className="block text-teal-500 dark:text-teal-600 sm:hidden block" href="/">
+                    </a>
+                    <a className="block text-teal-500 dark:text-teal-600 sm:hidden block" href="/">
                         <span className="sr-only">Home</span>
                         <Image src="/ishare_logo_sm.png" alt="ishare logo" height={50} width={50} />
-                    </Link>
+                    </a>
                     <Searchbar />
                 </div>
                 <div className="flex items-center gap-2">
