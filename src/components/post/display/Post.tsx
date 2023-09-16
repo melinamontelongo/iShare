@@ -30,7 +30,7 @@ export default function Post({ communityName, post, commentAmount, votesAmount, 
     const pathname = usePathname();
 
     return (<>
-        <div className="rounded-md shadow hover:bg-zinc-200 dark:hover:bg-zinc-800 group p-4 cursor-pointer" onClick={() => router.push(`/i/${communityName}/post/${post.id}`)}>
+        <div className="rounded-md shadow hover:bg-zinc-200 dark:hover:bg-zinc-800 group p-4">
             <div className="px-6 flex justify-between">
                 <PostVoteClient
                     postId={post.id}
@@ -62,7 +62,7 @@ export default function Post({ communityName, post, commentAmount, votesAmount, 
                                 )}
                             </div>
 
-                            <h1 className="text-lg font-semibold py-2 leading-6">
+                            <h1 className="text-lg font-semibold py-2 leading-6 cursor-pointer" onClick={() => router.push(`/i/${communityName}/post/${post.id}`)}>
                                 {post.title}
                             </h1>
                         </div>
