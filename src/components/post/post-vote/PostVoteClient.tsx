@@ -33,13 +33,10 @@ export default function PostVoteClient({ postId, initialVotesAmount, initialVote
                 postId,
                 voteType,
             }
-            await axios.patch("/api/community/post/vote", payload)
+            await axios.patch("/api/community/post/vote", payload);
+            return voteType;
         },
-        onError: (err, voteType) => {
-            if (voteType === "UP") setVotesAmount((prev => prev - 1));
-            else setVotesAmount((prev) => prev + 1);
-            //  reset current vote as it failed
-            setCurrentVote(previousVote)
+        onError: (err) => {
             if (err instanceof AxiosError) {
                 if (err.response?.status === 401) {
                     return loginToast();
@@ -51,8 +48,8 @@ export default function PostVoteClient({ postId, initialVotesAmount, initialVote
                 variant: "destructive"
             })
         },
-        onMutate: (type: VoteType) => {
-            //  If vote is same as before
+        onSuccess: (type: VoteType) => {
+            //  Vote is same type as before
             if (currentVote === type) {
                 setCurrentVote(undefined);
                 if (type === "UP") setVotesAmount((prev) => prev - 1);
@@ -60,8 +57,8 @@ export default function PostVoteClient({ postId, initialVotesAmount, initialVote
             } else {
                 // If vote is not the same as before
                 setCurrentVote(type);
-                if(type === "UP") setVotesAmount((prev) => prev + 1);
-                else if(type === "DOWN") setVotesAmount((prev) => prev - 1);
+                if (type === "UP") setVotesAmount((prev) => prev === -1 ? prev + 2 : prev + 1);
+                else if (type === "DOWN") setVotesAmount((prev) => prev === 1 ? prev - 2 : prev - 1);
             }
         }
     })
