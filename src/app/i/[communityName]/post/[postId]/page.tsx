@@ -24,11 +24,18 @@ export const fetchCache = "force-no-store"
 
 export default async function PostDetails({ params }: PageProps) {
     const session = await getAuthSession();
-    //  Check if cached
-    const cachedPost = (await redis.hgetall(`post:${params.postId}`)) as CachedPost
 
-    let post: (Post & { votes: Vote[]; author: Pick<User, "id" | "username">; community: Community }) | null = null
-    //  Only fetch db if no cached post
+    let cachedPost: CachedPost | null;
+    let post: (Post & { votes: Vote[]; author: Pick<User, "id" | "username">; community: Community }) | null = null;
+    try {
+        //  Check if cached
+        cachedPost = (await redis.hgetall(`post:${params.postId}`)) as CachedPost;
+    } catch (error) {
+        console.error(error);
+        cachedPost = null;
+    }
+
+    //  Only fetch db if no cached post or error was thrown when fetching cached post
     if (!cachedPost) {
         post = await prisma.post.findFirst({
             where: {
@@ -51,7 +58,7 @@ export default async function PostDetails({ params }: PageProps) {
         <div>
             <div className="h-full flex flex-col sm:flex-row items-center sm:items-start justify-between">
                 <Suspense fallback={<PostVoteSkeleton />}>
-                    <PostVoteServer postId={post?.id ?? cachedPost.id} getData={async () => {
+                    <PostVoteServer postId={(post?.id ?? cachedPost?.id)!} getData={async () => {
                         return await prisma.post.findUnique({
                             where: {
                                 id: params.postId,
@@ -66,25 +73,25 @@ export default async function PostDetails({ params }: PageProps) {
                     <div className="flex justify-between items-center ">
                         <div>
                             <p className="max-h-40 mt-1 truncate text-sm">
-                                Posted by u/{post?.author.username ?? cachedPost.authorUsername}{" "}
-                                {formatTimeToNow(new Date(post?.createdAt ?? cachedPost.createdAt))}
+                                Posted by u/{post?.author.username ?? cachedPost?.authorUsername}{" "}
+                                {formatTimeToNow(new Date((post?.createdAt ?? cachedPost?.createdAt)!))}
                             </p>
                             <h1 className="text-xl font-semibold py-2 leading-6">
-                                {post?.title ?? cachedPost.title}
+                                {post?.title ?? cachedPost?.title}
                             </h1>
 
                         </div>
 
-                        {session?.user.id === (post?.authorId ?? cachedPost.authorId) && (
+                        {session?.user.id === (post?.authorId ?? cachedPost?.authorId) && (
                             <div>
-                                <DeletePost postId={params.postId} communityName={post?.community.name ?? cachedPost.communityName} />
+                                <DeletePost postId={params.postId} communityName={(post?.community.name ?? cachedPost?.communityName)!} />
                             </div>
                         )}
                     </div>
-                    <EditorOutput content={post?.content ?? cachedPost.content} />
+                    <EditorOutput content={post?.content ?? cachedPost?.content} />
 
                     <Suspense fallback={<Loader2 className="h-5 w-5 animate-spin" />}>
-                        <CommentSection postId={post?.id ?? cachedPost.id} />
+                        <CommentSection postId={(post?.id ?? cachedPost?.id)!} />
                     </Suspense>
 
                 </div>
