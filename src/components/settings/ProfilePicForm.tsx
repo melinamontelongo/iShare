@@ -87,7 +87,7 @@ const ProfilePicForm = ({ currentPic }: ProfilePicFormProps) => {
                         }
                     </div>
                 </Avatar>
-                <Input type="file" className="bg-transparent border-0 file:cursor-pointer file:bg-zinc-50 file:dark:bg-zinc-950 file:rounded file:py-2 file:px-4 h-fit" onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                <Input type="file" className="bg-transparent border-0 file:cursor-pointer file:bg-zinc-50 file:dark:bg-zinc-950 file:rounded file:py-2 file:px-4 h-fit sm:w-[400px] w-full" onChange={(e: ChangeEvent<HTMLInputElement>) => {
                     e.target.files && displayPic(e.target.files)
                     setFile(e.target.files ?? undefined)
                 }} />

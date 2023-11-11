@@ -57,25 +57,29 @@ export default async function PostDetails({ params }: PageProps) {
     return (
         <div>
             <div className="h-full flex flex-col sm:flex-row items-center sm:items-start justify-between">
-                <Suspense fallback={<PostVoteSkeleton />}>
-                    <PostVoteServer postId={(post?.id ?? cachedPost?.id)!} getData={async () => {
-                        return await prisma.post.findUnique({
-                            where: {
-                                id: params.postId,
-                            },
-                            include: {
-                                votes: true,
-                            }
-                        })
-                    }} />
-                </Suspense>
-                <div className="sm:w-0 w-full flex-1 p-4 rounded-sm">
+                <div className="order-last">
+                    <Suspense fallback={<PostVoteSkeleton />}>
+                        <PostVoteServer postId={(post?.id ?? cachedPost?.id)!} getData={async () => {
+                            return await prisma.post.findUnique({
+                                where: {
+                                    id: params.postId,
+                                },
+                                include: {
+                                    votes: true,
+                                }
+                            })
+                        }} />
+                    </Suspense>
+                </div>
+                <div className="sm:w-0 w-full flex-1 p-4 rounded-sm order-first">
                     <div className="flex justify-between items-center ">
                         <div>
                             <p className="max-h-40 mt-1 truncate text-sm">
-                                Posted by u/{post?.author.username ?? cachedPost?.authorUsername}{" "}
-                                {formatTimeToNow(new Date((post?.createdAt ?? cachedPost?.createdAt)!))}
+                                Posted by u/{post?.author.username ?? cachedPost?.authorUsername}{"  "}
+                                <span className="text-zinc-600 dark:text-zinc-500">{formatTimeToNow(new Date((post?.createdAt ?? cachedPost?.createdAt)!))}</span>
                             </p>
+
+
                             <h1 className="text-xl font-semibold py-2 leading-6">
                                 {post?.title ?? cachedPost?.title}
                             </h1>

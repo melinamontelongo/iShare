@@ -64,7 +64,7 @@ export default function PostVoteClient({ postId, initialVotesAmount, initialVote
     })
 
     return (
-        <div className="flex sm:flex-col gap-4 sm:gap-0 pr-6 sm:w-20 pb-4 sm:pb-0">
+        <div className="flex sm:flex-col gap-2 sm:gap-0 pr-6 sm:w-20">
             <Button onClick={() => vote("UP")}
                 size="sm" variant="ghost" aria-label="upvote" className="hover:bg-zinc-200 dark:hover:bg-zinc-800">
                 <ArrowBigUp className={cn("h-5 w-5 text-zinc-700", {

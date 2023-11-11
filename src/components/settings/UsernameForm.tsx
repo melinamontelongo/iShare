@@ -70,7 +70,7 @@ export default function UsernameForm({ user }: UsernameFormProps) {
                             <span className="text-sm">u/</span>
                         </div>
                         <Label className="sr-only" htmlFor="name">Name</Label>
-                        <Input id="name" className="w-[400px] bg-zinc-100 dark:bg-zinc-900 pl-6 border border-zinc-200 dark:border-zinc-800 placeholder:text-zinc-600 placeholder:dark:text-zinc-500 focus-visible:ring-teal-500 dark:focus-visible:ring-teal-600" size={32} {...register("name")} />
+                        <Input id="name" className="sm:w-[400px] w-full bg-zinc-100 dark:bg-zinc-900 pl-6 border border-zinc-200 dark:border-zinc-800 placeholder:text-zinc-600 placeholder:dark:text-zinc-500 focus-visible:ring-teal-500 dark:focus-visible:ring-teal-600" size={32} {...register("name")} />
                         {errors?.name && (
                             <p className="px-1 text-xs text-red-600">{errors.name.message}</p>
                         )}
