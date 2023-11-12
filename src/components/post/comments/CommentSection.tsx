@@ -58,12 +58,12 @@ export default async function CommentSection({ postId }: CommentSectionProps) {
     }).filter((id) => id);
     console.log("REPLIES", deletedCommentReplies);
     return (
-        <div className="flex flex-col gap-y-4 mt-4">
+        <div className="flex flex-col gap-y-4 mt-4 p-4">
             <hr className="border border-zinc-200 dark:border-zinc-800 w-full h-px my-6" />
 
             <CreateComment postId={postId} />
 
-            <div className="flex flex-col gap-y-6 mt-4">
+            <div className="flex flex-col gap-y-6 mt-4 px-6">
                 {comments.filter((comment) => !comment.replyToId).map((topLevelComment) => {
                     const topLevelCommentvotesAmount = topLevelComment.votes.reduce((acc, vote) => {
                         if (vote.type === "UP") return acc + 1;

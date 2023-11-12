@@ -68,7 +68,7 @@ export default function PostComment({ comment, votesAmount, currentVote, postId 
                     />
                     <div className="ml-2 flex items-center gap-x-2">
                         <p className="text-sm font-medium">u/{comment.author.username}</p>
-                        <p className="max-h-40 truncate text-xs">
+                        <p className="max-h-40 truncate text-xs text-zinc-600 dark:text-zinc-500">
                             {formatTimeToNow(new Date(comment.createdAt))}
                         </p>
                     </div>
